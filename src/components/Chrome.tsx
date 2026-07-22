@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router'
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useI18n } from '../i18n/LanguageContext'
 import type { Lang } from '../i18n/ui'
 
@@ -175,7 +175,15 @@ export function Footer() {
       <div className="border-t border-hairline">
         <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-5 text-[11px] leading-relaxed text-ink-3 sm:flex-row sm:items-center sm:justify-between">
           <span>
-            GitHub · {f.poweredBy}{' '}
+            <a
+              href="https://github.com/wangruofeng/learnui"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-dotted underline-offset-4 text-ink-2"
+            >
+              GitHub
+            </a>{' '}
+            · {f.poweredBy}{' '}
             <a
               href="https://wangruofeng007.com/"
               target="_blank"
@@ -185,7 +193,23 @@ export function Footer() {
               {f.placeholder}
             </a>
           </span>
-          <span>{f.sourceNote}</span>
+          <span>
+            {f.sourceNote.split('namethatui.com').map((part, index, parts) => (
+              <Fragment key={`${part}-${index}`}>
+                {part}
+                {index < parts.length - 1 && (
+                  <a
+                    href="https://namethatui.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline decoration-dotted underline-offset-4 text-ink-2"
+                  >
+                    namethatui.com
+                  </a>
+                )}
+              </Fragment>
+            ))}
+          </span>
         </div>
       </div>
     </footer>
