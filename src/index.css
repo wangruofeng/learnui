@@ -213,6 +213,56 @@
 .anim-badge-pop { animation: nt-badge-pop 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
 .anim-triangle { animation: nt-triangle-wiggle 2.6s ease-in-out infinite; }
 
+/* ---------- vocab batch keyframes ---------- */
+@keyframes nt-reveal-up {
+  0% { opacity: 0; transform: translateY(16px); }
+  55%, 100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes nt-parallax-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes nt-parallax-fast {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(7px); }
+}
+@keyframes nt-clip-open {
+  0% { clip-path: inset(0 100% 0 0); }
+  60%, 100% { clip-path: inset(0 0 0 0); }
+}
+@keyframes nt-vt-grow {
+  0%, 35% { opacity: 0; transform: scale(0.82) translateX(30%); }
+  55%, 80% { opacity: 1; transform: scale(1) translateX(0); }
+  100% { opacity: 0; transform: scale(1.06); }
+}
+@keyframes nt-magnet {
+  0%, 100% { transform: translate(0, 0); }
+  45%, 58% { transform: translate(4px, -3px); }
+}
+@keyframes nt-progress-line {
+  0% { transform: scaleX(0); }
+  70%, 100% { transform: scaleX(1); }
+}
+@keyframes nt-infscroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+@keyframes nt-arrow-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+.anim-reveal { animation: nt-reveal-up 2.4s ease-out infinite; }
+.anim-parallax-slow { animation: nt-parallax-slow 6s ease-in-out infinite; }
+.anim-parallax-fast { animation: nt-parallax-fast 5s ease-in-out infinite; }
+.anim-clip { animation: nt-clip-open 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.anim-vt { animation: nt-vt-grow 3.4s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.anim-magnet { animation: nt-magnet 2.8s ease-in-out infinite; }
+.anim-progress-line { animation: nt-progress-line 3.4s cubic-bezier(0.65, 0, 0.35, 1) infinite; transform-origin: left; }
+.anim-infscroll { animation: nt-infscroll 4.5s linear infinite; }
+.anim-arrow { animation: nt-arrow-nudge 1.8s ease-in-out infinite; }
+.anim-marquee { animation: nt-marquee 14s linear infinite; }
+
 .skeleton-line {
   position: relative;
   overflow: hidden;

@@ -203,3 +203,97 @@ export function PixelDemo() {
     </StyleShell>
   )
 }
+
+/* ------------------------------------------------------------------ */
+/* vocab batch                                                         */
+/* ------------------------------------------------------------------ */
+
+export function EditorialDemo() {
+  return (
+    <StyleShell className="bg-[#f7f4ef]">
+      <div className="flex w-64 gap-3 text-left">
+        <div className="font-mono-ui text-[28px] leading-none text-neutral-300">01</div>
+        <div className="flex-1">
+          <div className="font-display text-[15px] leading-[1.05] text-neutral-900">
+            <span className="float-left mr-1 font-display text-[32px] leading-[0.7] text-neutral-900">T</span>he making of a modern magazine
+          </div>
+          <div className="mt-1.5 h-px w-full bg-neutral-300" />
+          <div className="mt-1.5 space-y-1">
+            <div className="h-1 w-full rounded bg-neutral-200" />
+            <div className="h-1 w-5/6 rounded bg-neutral-200" />
+          </div>
+          <div className="mt-1.5 border-l-2 border-neutral-800 pl-1.5 font-display text-[10px] italic leading-snug text-neutral-700">
+            “Design is intelligence made visible.”
+          </div>
+        </div>
+      </div>
+    </StyleShell>
+  )
+}
+
+export function DuotoneDemo() {
+  return (
+    <StyleShell className="bg-[#f3f1ec]">
+      <div className="flex items-center gap-2.5">
+        <div className="h-16 w-12 rounded-md" style={{ background: 'linear-gradient(135deg,#1f3d2b,#6a8f76)' }} />
+        <div className="space-y-1.5">
+          <div className="font-display text-[15px] text-neutral-900">Monochrome</div>
+          <div className="font-mono-ui text-[7px] uppercase tracking-wider text-neutral-500">off-white · black · deep green</div>
+          <div className="flex gap-1">
+            <div className="h-3 w-3 rounded-full bg-[#1f3d2b]" />
+            <div className="h-3 w-3 rounded-full bg-neutral-900" />
+            <div className="h-3 w-3 rounded-full border border-neutral-300 bg-[#f3f1ec]" />
+          </div>
+        </div>
+      </div>
+    </StyleShell>
+  )
+}
+
+export function GradientMeshDemo() {
+  return (
+    <StyleShell className="bg-[#eef0ec]">
+      <div className="relative h-28 w-64 overflow-hidden">
+        <div className="anim-blob-a absolute left-6 top-2 h-20 w-20 rounded-full bg-emerald-400/40 blur-2xl" />
+        <div className="anim-blob-b absolute right-8 top-6 h-24 w-24 rounded-full bg-neutral-400/40 blur-2xl" />
+        <div className="anim-blob-a absolute bottom-0 left-1/3 h-16 w-16 rounded-full bg-[#cfe0d2]/70 blur-2xl" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[15px] text-neutral-800">mesh</div>
+      </div>
+    </StyleShell>
+  )
+}
+
+export function GrainDemo() {
+  const grain =
+    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E\")"
+  return (
+    <StyleShell className="bg-[#1f3d2b]">
+      <div className="relative flex h-28 w-full items-center justify-center overflow-hidden">
+        <span className="font-display text-[18px] text-[#f3f1ec]">grain</span>
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.16] mix-blend-overlay"
+          style={{ backgroundImage: grain, backgroundSize: '80px 80px' }}
+        />
+      </div>
+    </StyleShell>
+  )
+}
+
+export function NeumorphismDemo() {
+  const c = '#e6e9ef'
+  const out = '6px 6px 12px #c8ccd4, -6px -6px 12px #ffffff'
+  const inn = 'inset 5px 5px 10px #c8ccd4, inset -5px -5px 10px #ffffff'
+  const bar = '4px 4px 8px #c8ccd4, -4px -4px 8px #ffffff'
+  return (
+    <StyleShell className="bg-[#e6e9ef]">
+      <div className="flex items-center gap-3">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full text-[14px] text-neutral-500" style={{ backgroundColor: c, boxShadow: out }}>▶</div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-full text-[14px] text-neutral-500" style={{ backgroundColor: c, boxShadow: inn }}>■</div>
+        <div className="space-y-1.5">
+          <div className="h-2 w-14 rounded-full" style={{ backgroundColor: c, boxShadow: bar }} />
+          <div className="h-2 w-10 rounded-full" style={{ backgroundColor: c, boxShadow: bar }} />
+        </div>
+      </div>
+    </StyleShell>
+  )
+}

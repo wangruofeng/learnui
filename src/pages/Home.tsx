@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router'
-import { ENTRIES, type Entry } from '../data/entries'
+import { ENTRIES, getEntryCategory, type Entry, type EntryCategory } from '../data/entries'
 import { ENTRIES_ZH } from '../data/zh'
 import { EntryCard } from '../components/EntryCard'
 import { EntryDetail } from '../components/EntryDetail'
@@ -135,6 +135,8 @@ function TranslationTable() {
           <p className="mt-1 text-[13px] text-ink-2">{ui.home.table.sub}</p>
         </div>
         <input
+          id="translation-table-filter"
+          name="translation-table-filter"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder={ui.home.table.placeholder}
@@ -175,11 +177,13 @@ function TranslationTable() {
 /* ------------------------------------------------------------------ */
 
 type Filter = 'all' | 'web' | 'macos'
+type CategoryFilter = 'all' | EntryCategory
 
 export default function Home() {
   const { ui } = useI18n()
   const [q, setQ] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
+  const [category, setCategory] = useState<CategoryFilter>('all')
   const [open, setOpen] = useState<Entry | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -199,11 +203,21 @@ export default function Home() {
   const results = useMemo(() => {
     return entries
       .filter((e) => (filter === 'all' ? true : e.platform === filter))
+      .filter((e) => (category === 'all' ? true : getEntryCategory(e) === category))
       .map((e) => ({ e, s: score(e, q) }))
       .filter((x) => x.s > 0)
       .sort((a, b) => (q ? b.s - a.s : 0))
       .map((x) => x.e)
-  }, [entries, q, filter])
+  }, [entries, q, filter, category])
+
+  const groupedResults = useMemo(() => {
+    const groups = new Map<EntryCategory, Entry[]>()
+    results.forEach((entry) => {
+      const key = getEntryCategory(entry)
+      groups.set(key, [...(groups.get(key) ?? []), entry])
+    })
+    return [...groups.entries()]
+  }, [results])
 
   const counts = useMemo(
     () => ({
@@ -244,6 +258,8 @@ export default function Home() {
         <div className="relative mx-auto mt-8 max-w-xl">
           <input
             ref={inputRef}
+            id="ui-dictionary-search"
+            name="ui-dictionary-search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={h.hero.searchPlaceholder}
@@ -278,15 +294,42 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="mb-6 flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <button
+            onClick={() => setCategory('all')}
+            className={`shrink-0 rounded-full border px-3 py-1 text-[11px] transition-colors ${category === 'all' ? 'border-ink bg-ink text-white' : 'border-hairline bg-white text-ink-2 hover:border-hairline-dark'}`}
+          >
+            {h.dict.typeAll}
+          </button>
+          {(Object.keys(h.dict.types) as EntryCategory[]).map((key) => (
+            <button
+              key={key}
+              onClick={() => setCategory(key)}
+              className={`shrink-0 rounded-full border px-3 py-1 text-[11px] transition-colors ${category === key ? 'border-ink bg-ink text-white' : 'border-hairline bg-white text-ink-2 hover:border-hairline-dark'}`}
+            >
+              {h.dict.types[key]}
+            </button>
+          ))}
+        </div>
+
         {results.length === 0 ? (
           <div className="rounded-lg border border-dashed border-hairline-dark bg-white/60 px-6 py-16 text-center">
             <p className="font-display text-xl italic text-ink-2">{h.dict.emptyTitle}</p>
             <p className="mt-1 text-[13px] text-ink-3">{h.dict.emptyHint}</p>
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {results.map((e) => (
-              <EntryCard key={e.id} entry={e} onOpen={setOpen} />
+          <div className="space-y-10">
+            {groupedResults.map(([group, groupEntries]) => (
+              <section key={group} aria-labelledby={`category-${group}`}>
+                <div className="mb-3 flex items-center gap-3">
+                  <h3 id={`category-${group}`} className="font-mono-ui text-[11px] font-medium uppercase tracking-wider text-ink-2">{h.dict.types[group]}</h3>
+                  <span className="h-px flex-1 bg-hairline" />
+                  <span className="font-mono-ui text-[10px] text-ink-3">{groupEntries.length}</span>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {groupEntries.map((e) => <EntryCard key={e.id} entry={e} onOpen={setOpen} />)}
+                </div>
+              </section>
             ))}
           </div>
         )}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { Entry } from '../data/entries'
 import { DEMO_REGISTRY } from './demo-registry'
+import { BadgeChipPillTagDemo } from './demos-web'
 import { PlatformBadge } from './EntryCard'
 import { useI18n, localizeEntry } from '../i18n/LanguageContext'
 
@@ -18,6 +19,20 @@ export function EntryDetail({ entry, onClose }: { entry: Entry | null; onClose: 
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [entry, onClose])
+
+  // Lock background scroll while the panel is open
+  useEffect(() => {
+    if (!entry) return
+    const { body, documentElement } = document
+    const prevBody = body.style.overflow
+    const prevHtml = documentElement.style.overflow
+    body.style.overflow = 'hidden'
+    documentElement.style.overflow = 'hidden'
+    return () => {
+      body.style.overflow = prevBody
+      documentElement.style.overflow = prevHtml
+    }
+  }, [entry])
 
   if (!entry) return null
   const e = localizeEntry(entry, lang)
@@ -49,7 +64,9 @@ export function EntryDetail({ entry, onClose }: { entry: Entry | null; onClose: 
 
         <div className="p-5">
           <div className="overflow-hidden rounded-lg border border-hairline bg-white [&>div]:h-52 [&>div]:rounded-none [&>div]:border-b-0">
-            {Demo && <Demo />}
+            {Demo && (e.id === 'badge-chip-pill-tag'
+              ? <BadgeChipPillTagDemo anatomyActive={active} onAnatomyActive={setActive} />
+              : <Demo />)}
           </div>
 
           <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_240px]">

@@ -27,8 +27,12 @@ export function EntryCard({ entry, onOpen }: { entry: Entry; onOpen: (e: Entry) 
   const e = useEntry(entry)
   const Demo = DEMO_REGISTRY[e.id]
   return (
-    <button
-      onClick={() => onOpen(e)}
+    <div
+      onClick={(event) => {
+        const target = event.target as HTMLElement
+        if (target.closest('button, a, input, select, textarea, [role="button"], [role="tab"]')) return
+        onOpen(e)
+      }}
       className="entry-card group flex flex-col overflow-hidden rounded-lg border border-hairline bg-white text-left"
     >
       {Demo ? <Demo /> : <div className="h-36 border-b border-hairline bg-neutral-50" />}
@@ -42,6 +46,6 @@ export function EntryCard({ entry, onOpen }: { entry: Entry; onOpen: (e: Entry) 
         <code className="mt-1.5 block truncate font-mono-ui text-[11px] text-ink-3">{e.symbol}</code>
         <p className="mt-2 text-[13px] leading-relaxed text-ink-2">{e.blurb}</p>
       </div>
-    </button>
+    </div>
   )
 }
