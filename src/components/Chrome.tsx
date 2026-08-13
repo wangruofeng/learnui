@@ -141,19 +141,13 @@ export function Footer() {
     <footer className="mt-20 border-t border-hairline bg-paper">
       <div className="mx-auto max-w-6xl px-4 py-14">
         {/* 品牌行 */}
-        <div className="flex flex-wrap items-end justify-between gap-4 border-b border-hairline pb-8">
+        <div className="border-b border-hairline pb-8">
           <div>
             <div className="font-display text-[28px] leading-none tracking-tight">
               name <em className="not-italic opacity-60">that</em> ui
             </div>
             <p className="mt-2 font-mono-ui text-[11px] uppercase tracking-[0.14em] text-ink-3">{f.tagline}</p>
           </div>
-          <Link
-            to="/releases"
-            className="font-mono-ui text-[12px] text-ink-2 underline decoration-dotted underline-offset-4 hover:text-ink"
-          >
-            {f.releases}
-          </Link>
         </div>
 
        {/* 关注与支持 */}
@@ -189,10 +183,6 @@ export function Footer() {
             >
               GitHub
             </a>
-            {' · '}
-            <Link to="/releases" className="underline decoration-dotted underline-offset-4 text-ink-2">
-              {f.releases}
-            </Link>
             {' · '}
             {f.poweredBy}{' '}
             <a

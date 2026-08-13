@@ -20,29 +20,29 @@ export const RELEASES: Release[] = [
       zh: [
         {
           lead: '词条',
-          body: '新增 17 个 Web 词条：步骤条、头像组、多选、滚动监听、行内警告 vs. 提示框 vs. 横幅、登录表单、日期选择器、站点页头 vs. 导航栏、卡片、缩放手柄、三点菜单、树形视图、数量步进器、上下文菜单、分裂按钮、跳过链接、菜单按钮。每条都有可交互 demo，中英文同步。',
+          body: '新增 18 个 Web 词条：斜杠菜单、差异视图、提及补全、标签输入、冻结列、批量操作栏、行展开、加载更多、引导高亮、公告条、通知中心、状态点、主题切换、图片放大镜、模糊渐进、操作列表、速度拨号 FAB、悬浮胶囊导航。每条均提供中英文说明与可交互 demo。',
         },
         {
-          lead: '标识',
-          body: '「新」标记只留在本批词条上，更早的卡片不再显示，避免整站都像刚上线。',
+          lead: '浏览',
+          body: '首页加入「最近更新」筛选与回到顶部按钮；导航和更新日志页已完善，版本标识改用 Charter 衬线字体。',
         },
         {
-          lead: '站点',
-          body: '新增 /releases 更新日志页，页脚可进入；README 拆成中英两份。',
+          lead: '交互与文档',
+          body: '图片放大镜升级为跟随式透镜与 2× 细节预览；README 拆分为中文与英文版本，仓库新增 MIT 开源协议。',
         },
       ],
       en: [
         {
           lead: 'Entries',
-          body: 'Added 17 web entries: Steps, Avatar Group, Multi-select, Scrollspy, Inline Alert vs. Callout vs. Banner, Sign-in Form, Date Picker, Site Header vs. Navigation Bar, Card, Resize Handle, The Three Dots, Tree View, Spinbutton, Context Menu, Split Button, Skip Link, and Menu Button. Each has an interactive demo, with English and Chinese in sync.',
+          body: 'Added 18 web entries: Slash Command Menu, Diff View, Mention Autocomplete, Tag Input, Frozen Column, Bulk Action Bar, Row Expansion, Load More, Coach Mark, Announcement Bar, Notification Center, Status Dot, Theme Toggle, Image Magnifier, Blur-up, Action Sheet, Speed Dial FAB, and Floating Pill Navigation. Each includes bilingual copy and an interactive demo.',
         },
         {
-          lead: 'Badges',
-          body: 'The New badge now stays only on this batch, so older cards no longer look freshly shipped.',
+          lead: 'Browse',
+          body: 'Added a Recent filter and a back-to-top control on the home page. Navigation and the release-notes page are refined, and version labels now use the Charter serif stack.',
         },
         {
-          lead: 'Site',
-          body: 'Added a /releases changelog, linked from the footer. The README is now split into Chinese and English.',
+          lead: 'Interaction and docs',
+          body: 'The Image Magnifier now uses a pointer-following lens with a 2× detail preview. The README is split into Chinese and English editions, and the repository now includes an MIT License.',
         },
       ],
     },
@@ -88,13 +88,13 @@ export const RELEASES: Release[] = [
       zh: [
         {
           lead: '上线',
-          body: '发布中英双语 UI 视觉词典：Web 与 macOS 词条、可交互 demo、风格页、方法论与赞助页。',
+          body: '发布中英双语 UI 视觉词典：Web 与 macOS 词条、可交互 demo 与风格页。',
         },
       ],
       en: [
         {
           lead: 'Launch',
-          body: 'Shipped the bilingual UI visual dictionary: Web and macOS entries, interactive demos, the styles atlas, methodology, and a sponsor page.',
+          body: 'Shipped the bilingual UI visual dictionary: Web and macOS entries, interactive demos, and the styles atlas.',
         },
       ],
     },
