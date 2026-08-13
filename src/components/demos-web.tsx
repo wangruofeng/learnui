@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Check, ChevronDown, ChevronRight, Eye, EyeOff, FileText, Folder, Grid2X2, Home, Minus, MoreHorizontal, MoreVertical, Plus, UserRound } from 'lucide-react'
+import { AtSign, Bell, Check, ChevronDown, ChevronRight, Copy, Eye, EyeOff, FileText, Folder, FolderPlus, Grid2X2, Home, Image, Minus, Moon, MoreHorizontal, MoreVertical, Plus, Share, Sun, Trash2, Type, Upload, UserRound } from 'lucide-react'
 
 /* ------------------------------------------------------------------ */
 /* shared bits                                                         */
@@ -2851,7 +2851,7 @@ export function SpinbuttonDemo() {
   return (
     <DemoBox>
       <div className="text-center">
-        <div className="flex items-center rounded-md border border-neutral-300 bg-white">
+        <div className="inline-flex items-center rounded-md border border-neutral-300 bg-white">
           <button type="button" aria-label="Decrease quantity" onClick={() => step(-1)} className="px-2 py-1.5 text-neutral-600">
             <Minus className="h-3 w-3" />
           </button>
@@ -2981,7 +2981,7 @@ export function SkipLinkDemo() {
           <button
             type="button"
             onClick={() => { setSkipped(true); setFocused(false) }}
-            className="absolute left-1 top-1 z-10 rounded bg-neutral-900 px-2 py-0.5 text-[8px] text-white"
+            className="absolute right-1 top-1 z-10 rounded bg-neutral-900 px-2 py-0.5 text-[8px] text-white"
           >
             Skip to content
           </button>
@@ -3036,6 +3036,638 @@ export function MenuButtonDemo() {
           </div>
         )}
         {picked && !open && <div className="mt-8 font-mono-ui text-[8px] text-neutral-400">{picked}</div>}
+      </div>
+    </DemoBox>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* named patterns · batch 3                                            */
+/* ------------------------------------------------------------------ */
+
+const SLASH_ITEMS = [
+  { id: 'heading', label: 'Heading', icon: Type },
+  { id: 'image', label: 'Image', icon: Image },
+  { id: 'table', label: 'Table', icon: Grid2X2 },
+]
+
+export function SlashCommandDemo() {
+  const [query, setQuery] = useState('/')
+  const [picked, setPicked] = useState<string | null>(null)
+  const open = query.startsWith('/')
+  const q = query.slice(1).toLowerCase()
+  const items = SLASH_ITEMS.filter((item) => item.label.toLowerCase().includes(q))
+  return (
+    <DemoBox>
+      <div className="w-44">
+        <input
+          id="slash-block"
+          name="slash-block"
+          value={query}
+          onChange={(event) => { setQuery(event.target.value); setPicked(null) }}
+          className="w-full rounded border border-neutral-300 px-2 py-1 text-[9px] outline-none focus:border-emerald-600"
+        />
+        {open && items.length > 0 && (
+          <div role="listbox" className="mt-1 rounded-md border border-neutral-200 bg-white py-0.5 shadow-lg">
+            {items.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                role="option"
+                onClick={() => { setPicked(item.label); setQuery('') }}
+                className="flex w-full items-center gap-1.5 px-2 py-1 text-left text-[8px] text-neutral-700"
+              >
+                <item.icon className="h-3 w-3 text-neutral-400" />
+                {item.label}
+              </button>
+            ))}
+          </div>
+        )}
+        {picked && <div className="mt-1 font-mono-ui text-[8px] text-emerald-700">inserted {picked}</div>}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function DiffViewDemo() {
+  return (
+    <DemoBox>
+      <div className="grid w-56 grid-cols-2 overflow-hidden rounded-md border border-neutral-200 text-left font-mono-ui text-[8px] leading-4">
+        <div className="border-r border-neutral-100">
+          <div className="bg-neutral-50 px-2 py-0.5 text-[7px] uppercase tracking-wider text-neutral-400">before</div>
+          <div className="px-2 py-1 text-neutral-500">title: Notes</div>
+          <div className="bg-red-50 px-2 py-0.5 text-red-700"><del>count: 3</del></div>
+          <div className="px-2 py-1 text-neutral-500">draft: true</div>
+        </div>
+        <div>
+          <div className="bg-neutral-50 px-2 py-0.5 text-[7px] uppercase tracking-wider text-neutral-400">after</div>
+          <div className="px-2 py-1 text-neutral-500">title: Notes</div>
+          <div className="bg-emerald-50 px-2 py-0.5 text-emerald-800"><ins className="no-underline">count: 12</ins></div>
+          <div className="px-2 py-1 text-neutral-500">draft: true</div>
+        </div>
+      </div>
+    </DemoBox>
+  )
+}
+
+const PEOPLE = ['Ada Lovelace', 'Alan Turing', 'Grace Hopper']
+
+export function MentionAutocompleteDemo() {
+  const [text, setText] = useState('@')
+  const [mention, setMention] = useState<string | null>(null)
+  const open = text.endsWith('@') || /@\w*$/.test(text)
+  const q = (text.split('@').pop() ?? '').toLowerCase()
+  const matches = PEOPLE.filter((name) => name.toLowerCase().includes(q))
+  return (
+    <DemoBox>
+      <div className="w-48">
+        <div className="flex flex-wrap items-center gap-1 rounded border border-neutral-300 bg-white px-2 py-1">
+          {mention && <span className="rounded bg-emerald-50 px-1.5 py-px text-[8px] font-medium text-emerald-800">@{mention.split(' ')[0]}</span>}
+          <input
+            id="mention-field"
+            name="mention-field"
+            value={text}
+            onChange={(event) => setText(event.target.value)}
+            className="min-w-16 flex-1 bg-transparent text-[9px] outline-none"
+          />
+        </div>
+        {open && !mention && (
+          <div role="listbox" className="mt-1 rounded-md border border-neutral-200 bg-white py-0.5 shadow-lg">
+            {matches.map((name) => (
+              <button
+                key={name}
+                type="button"
+                role="option"
+                onClick={() => { setMention(name); setText('') }}
+                className="flex w-full items-center gap-1.5 px-2 py-1 text-left text-[8px]"
+              >
+                <AtSign className="h-3 w-3 text-neutral-400" />
+                {name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function TagInputDemo() {
+  const [tags, setTags] = useState(['Design', 'Web'])
+  const [draft, setDraft] = useState('')
+  function add() {
+    const next = draft.trim()
+    if (!next || tags.includes(next)) return
+    setTags((current) => [...current, next])
+    setDraft('')
+  }
+  return (
+    <DemoBox>
+      <div className="flex w-52 flex-wrap items-center gap-1 rounded-md border border-neutral-300 bg-white px-1.5 py-1">
+        {tags.map((tag) => (
+          <button
+            key={tag}
+            type="button"
+            onClick={() => setTags((current) => current.filter((item) => item !== tag))}
+            className="rounded bg-neutral-900 px-1.5 py-px text-[8px] text-white"
+          >
+            {tag} ×
+          </button>
+        ))}
+        <input
+          id="tag-draft"
+          name="tag-draft"
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ',') { event.preventDefault(); add() }
+            if (event.key === 'Backspace' && !draft) setTags((current) => current.slice(0, -1))
+          }}
+          placeholder="add…"
+          className="min-w-12 flex-1 bg-transparent text-[9px] outline-none"
+        />
+      </div>
+    </DemoBox>
+  )
+}
+
+export function FrozenColumnDemo() {
+  return (
+    <DemoBox>
+      <div className="h-24 w-52 overflow-auto rounded-md border border-neutral-200 bg-white">
+        <table className="min-w-[280px] border-separate border-spacing-0 text-left text-[8px]">
+          <thead>
+            <tr>
+              {['Project', 'Owner', 'Status', 'Due'].map((h, i) => (
+                <th
+                  key={h}
+                  className={`sticky top-0 z-10 border-b border-neutral-200 bg-neutral-50 px-2 py-1 font-medium ${i === 0 ? 'sticky left-0 z-20' : ''}`}
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {[['Atlas', 'Ada', 'Live', 'Aug 18'], ['Harbor', 'Alan', 'Draft', 'Aug 22'], ['Nimbus', 'Grace', 'Review', 'Sep 1']].map((row) => (
+              <tr key={row[0]}>
+                {row.map((cell, i) => (
+                  <td key={cell} className={`border-b border-neutral-100 px-2 py-1 ${i === 0 ? 'sticky left-0 bg-white font-medium' : 'text-neutral-500'}`}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function BulkActionBarDemo() {
+  const [picked, setPicked] = useState<string[]>(['Atlas'])
+  const rows = ['Atlas', 'Harbor', 'Nimbus']
+  function toggle(name: string) {
+    setPicked((current) => (current.includes(name) ? current.filter((item) => item !== name) : [...current, name]))
+  }
+  return (
+    <DemoBox>
+      <div className="w-52">
+        {picked.length > 0 && (
+          <div className="mb-1.5 flex items-center justify-between rounded bg-neutral-900 px-2 py-1 text-[8px] text-white">
+            <span>{picked.length} selected</span>
+            <span className="flex gap-2 text-neutral-300">
+              <button type="button">Move</button>
+              <button type="button" onClick={() => setPicked([])}>Clear</button>
+            </span>
+          </div>
+        )}
+        <div className="space-y-1">
+          {rows.map((name) => (
+            <label key={name} className="flex items-center gap-2 rounded border border-neutral-200 bg-white px-2 py-1 text-[8px]">
+              <input type="checkbox" checked={picked.includes(name)} onChange={() => toggle(name)} />
+              {name}
+            </label>
+          ))}
+        </div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function RowExpansionDemo() {
+  const [open, setOpen] = useState('Atlas')
+  const rows = [
+    { name: 'Atlas', detail: 'Shipped to 12 teams last week.' },
+    { name: 'Harbor', detail: 'Waiting on copy review.' },
+  ]
+  return (
+    <DemoBox>
+      <div className="w-52 overflow-hidden rounded-md border border-neutral-200 bg-white text-left text-[8px]">
+        {rows.map((row) => (
+          <div key={row.name} className="border-b border-neutral-100 last:border-0">
+            <button
+              type="button"
+              aria-expanded={open === row.name}
+              onClick={() => setOpen(open === row.name ? '' : row.name)}
+              className="flex w-full items-center gap-1 px-2 py-1.5 font-medium"
+            >
+              <ChevronRight className={`h-3 w-3 text-neutral-400 transition-transform ${open === row.name ? 'rotate-90' : ''}`} />
+              {row.name}
+            </button>
+            {open === row.name && <div className="bg-neutral-50 px-6 pb-2 text-neutral-500">{row.detail}</div>}
+          </div>
+        ))}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function LoadMoreDemo() {
+  const all = ['Atlas', 'Harbor', 'Nimbus', 'Quill', 'Ridge', 'Sable']
+  const [count, setCount] = useState(3)
+  const visible = all.slice(0, count)
+  return (
+    <DemoBox>
+      <div className="w-40 text-center">
+        <div className="space-y-1">
+          {visible.map((name) => (
+            <div key={name} className="rounded border border-neutral-200 bg-white px-2 py-1 text-[8px]">{name}</div>
+          ))}
+        </div>
+        {count < all.length ? (
+          <button type="button" onClick={() => setCount((n) => Math.min(all.length, n + 2))} className="mt-1.5 text-[8px] font-medium text-emerald-700">
+            Load more
+          </button>
+        ) : (
+          <div className="mt-1.5 font-mono-ui text-[7px] text-neutral-400">end of list</div>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function CoachMarkDemo() {
+  const [step, setStep] = useState(0)
+  const [on, setOn] = useState(true)
+  const targets = ['Save', 'Share']
+  return (
+    <DemoBox>
+      <div className="relative h-24 w-52 overflow-hidden rounded-lg border border-neutral-200 bg-white p-3">
+        <div className="flex justify-end gap-2">
+          {targets.map((label, i) => (
+            <button
+              key={label}
+              type="button"
+              className={`rounded px-2 py-1 text-[8px] ${i === 0 ? 'bg-neutral-900 text-white' : 'border border-neutral-300'}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        {on && (
+          <>
+            <div className="absolute inset-0 bg-neutral-900/40" />
+            <div className={`absolute top-2 h-7 rounded ring-2 ring-white ${step === 0 ? 'right-14 w-10' : 'right-3 w-11'}`} />
+            <div className="absolute bottom-2 left-2 right-2 rounded-md bg-white p-2 text-left shadow-lg">
+              <div className="text-[8px] font-semibold">{step === 0 ? 'Save the draft' : 'Share when ready'}</div>
+              <div className="mt-1 flex justify-between text-[7px] text-neutral-500">
+                <button type="button" onClick={() => setOn(false)}>Skip</button>
+                <button
+                  type="button"
+                  onClick={() => (step === 0 ? setStep(1) : setOn(false))}
+                  className="font-medium text-emerald-700"
+                >
+                  {step === 0 ? 'Next' : 'Done'}
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+        {!on && (
+          <button type="button" onClick={() => { setOn(true); setStep(0) }} className="absolute bottom-2 right-2 font-mono-ui text-[7px] text-neutral-400">
+            replay
+          </button>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function AnnouncementBarDemo() {
+  const [on, setOn] = useState(true)
+  return (
+    <DemoBox>
+      <div className="w-56 overflow-hidden rounded-lg border border-neutral-200 bg-white">
+        {on ? (
+          <div className="flex items-center justify-between bg-neutral-900 px-2 py-1 text-[8px] text-white">
+            <span>v1.3 is live — see what’s new</span>
+            <button type="button" aria-label="Dismiss announcement" onClick={() => setOn(false)}>×</button>
+          </div>
+        ) : (
+          <button type="button" onClick={() => setOn(true)} className="w-full bg-neutral-50 py-1 text-[7px] text-neutral-400">
+            restore bar
+          </button>
+        )}
+        <div className="flex items-center justify-between px-2 py-2 text-[8px] text-neutral-400">
+          <span className="font-semibold text-neutral-800">Field</span>
+          <span>Home · Docs</span>
+        </div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function NotificationCenterDemo() {
+  const [open, setOpen] = useState(true)
+  const [items, setItems] = useState([
+    { id: 1, text: 'Ada mentioned you', unread: true },
+    { id: 2, text: 'Harbor was shared', unread: true },
+    { id: 3, text: 'Atlas deployed', unread: false },
+  ])
+  const unread = items.filter((item) => item.unread).length
+  return (
+    <DemoBox>
+      <div className="relative h-24 w-52">
+        <button
+          type="button"
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          aria-label="Notifications"
+          onClick={() => setOpen(!open)}
+          className="absolute right-2 top-1"
+        >
+          <Bell className="h-4 w-4" />
+          {unread > 0 && <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-red-500" />}
+        </button>
+        {open && (
+          <div className="absolute left-2 right-2 top-7 rounded-md border border-neutral-200 bg-white p-1 shadow-lg">
+            <div className="flex items-center justify-between px-1.5 py-1 font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">
+              Inbox
+              <button type="button" onClick={() => setItems((current) => current.map((item) => ({ ...item, unread: false })))}>mark all</button>
+            </div>
+            {items.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setItems((current) => current.map((row) => (row.id === item.id ? { ...row, unread: false } : row)))}
+                className="flex w-full items-center gap-1.5 px-1.5 py-1 text-left text-[8px]"
+              >
+                <span className={`h-1.5 w-1.5 rounded-full ${item.unread ? 'bg-emerald-500' : 'bg-neutral-200'}`} />
+                {item.text}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+const PRESENCE = [
+  { initials: 'AL', status: 'online', title: 'Online', tint: 'bg-amber-200' },
+  { initials: 'AT', status: 'away', title: 'Away', tint: 'bg-sky-200' },
+  { initials: 'GH', status: 'offline', title: 'Offline', tint: 'bg-rose-200' },
+] as const
+
+export function StatusDotDemo() {
+  const [active, setActive] = useState(0)
+  const color = { online: 'bg-emerald-500', away: 'bg-amber-400', offline: 'bg-neutral-400' }
+  return (
+    <DemoBox>
+      <div className="flex gap-4">
+        {PRESENCE.map((person, i) => (
+          <button key={person.initials} type="button" title={person.title} onClick={() => setActive(i)} className="relative">
+            <span className={`flex h-8 w-8 items-center justify-center rounded-full text-[9px] font-semibold ${person.tint}`}>{person.initials}</span>
+            <span className={`absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full ring-2 ring-white ${color[person.status]} ${active === i ? 'scale-110' : ''}`} />
+          </button>
+        ))}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function ThemeToggleDemo() {
+  const [dark, setDark] = useState(false)
+  return (
+    <DemoBox className={dark ? 'bg-neutral-900' : ''}>
+      <button
+        type="button"
+        aria-pressed={dark}
+        onClick={() => setDark(!dark)}
+        className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-[9px] ${dark ? 'border-neutral-600 bg-neutral-800 text-white' : 'border-neutral-300 bg-white text-neutral-800'}`}
+      >
+        {dark ? <Moon className="h-3.5 w-3.5" /> : <Sun className="h-3.5 w-3.5" />}
+        {dark ? 'Dark' : 'Light'}
+      </button>
+    </DemoBox>
+  )
+}
+
+export function ImageMagnifierDemo() {
+  const boxRef = useRef<HTMLDivElement>(null)
+  const [pos, setPos] = useState({ x: 48, y: 42 })
+  const [on, setOn] = useState(false)
+  const productTexture = [
+    'radial-gradient(circle at 73% 23%, rgb(255 255 255 / 88%) 0 2.8%, transparent 3.2%)',
+    'radial-gradient(circle at 31% 70%, rgb(253 230 138 / 95%) 0 5.5%, transparent 6%)',
+    'repeating-linear-gradient(135deg, rgb(255 255 255 / 28%) 0 1px, transparent 1px 7px)',
+    'linear-gradient(135deg, #0f766e 0%, #14b8a6 36%, #38bdf8 64%, #fde68a 100%)',
+  ].join(', ')
+
+  return (
+    <DemoBox>
+      <div className="flex items-center gap-3">
+        <div
+          ref={boxRef}
+          onPointerEnter={(event) => {
+            if (event.pointerType !== 'touch') setOn(true)
+          }}
+          onPointerLeave={() => setOn(false)}
+          onPointerMove={(event) => {
+            if (event.pointerType === 'touch') return
+            const rect = boxRef.current?.getBoundingClientRect()
+            if (!rect) return
+            setPos({
+              x: Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100)),
+              y: Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100)),
+            })
+          }}
+          className={`relative h-24 w-32 cursor-crosshair overflow-hidden rounded-lg border bg-teal-700 shadow-sm ${on ? 'border-teal-500 ring-2 ring-teal-200' : 'border-teal-900/20'}`}
+          style={{ backgroundImage: productTexture }}
+          aria-label="Move the pointer over the image to magnify details"
+        >
+          <div className="absolute left-2 top-2 rounded bg-white/90 px-1.5 py-1 font-mono-ui text-[7px] font-semibold tracking-[0.14em] text-teal-900 shadow-sm">
+            FIELD NOTES
+          </div>
+          <div className="absolute bottom-2 left-2 text-[8px] font-medium tracking-wide text-white/95">No. 02 · SEA GLASS</div>
+          <div className="absolute right-2 top-9 h-7 w-7 rounded-full border-2 border-white/80 bg-white/20 shadow-sm" />
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute h-12 w-12 rounded-full border-2 border-white bg-white/10 shadow-[0_4px_12px_rgb(15_23_42_/_0.32)] transition-opacity duration-150 ${on ? 'opacity-100' : 'opacity-0'}`}
+            style={{
+              left: `${pos.x}%`,
+              top: `${pos.y}%`,
+              transform: 'translate(-50%, -50%)',
+              backgroundImage: productTexture,
+              backgroundSize: '300% 300%',
+              backgroundPosition: `${pos.x}% ${pos.y}%`,
+            }}
+          >
+            <span className="absolute inset-1 rounded-full border border-white/45" />
+            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-white/45" />
+            <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-white/45" />
+          </div>
+          <div className={`pointer-events-none absolute inset-x-0 bottom-0 bg-teal-950/55 px-2 py-1 text-center font-mono-ui text-[7px] tracking-wide text-white transition-opacity duration-150 ${on ? 'opacity-0' : 'opacity-100'}`}>
+            HOVER TO INSPECT
+          </div>
+        </div>
+        <div
+          className={`relative h-24 w-24 overflow-hidden rounded-lg border bg-teal-700 shadow-sm transition-[border-color,box-shadow] duration-150 ${on ? 'border-teal-500 shadow-md' : 'border-neutral-200'}`}
+          style={{
+            backgroundImage: productTexture,
+            backgroundSize: '300% 300%',
+            backgroundPosition: on ? `${pos.x}% ${pos.y}%` : '50% 50%',
+          }}
+        >
+          <div className={`absolute left-1.5 top-1.5 rounded bg-neutral-950/75 px-1 py-0.5 font-mono-ui text-[7px] font-semibold tracking-wider text-white transition-opacity duration-150 ${on ? 'opacity-100' : 'opacity-0'}`}>
+            2× ZOOM
+          </div>
+          <div className={`absolute inset-0 flex items-center justify-center bg-white/75 font-mono-ui text-[7px] tracking-wide text-neutral-500 transition-opacity duration-150 ${on ? 'opacity-0' : 'opacity-100'}`}>
+            DETAIL
+          </div>
+        </div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function BlurUpDemo() {
+  const [sharp, setSharp] = useState(false)
+  useEffect(() => {
+    const id = window.setTimeout(() => setSharp(true), 900)
+    return () => window.clearTimeout(id)
+  }, [sharp])
+  return (
+    <DemoBox>
+      <div className="text-center">
+        <div
+          className={`h-16 w-28 rounded-md bg-gradient-to-br from-emerald-300 to-sky-400 ${sharp ? 'blur-0' : 'blur-md'} transition-[filter] duration-500`}
+        />
+        <button type="button" onClick={() => setSharp(false)} className="mt-1.5 font-mono-ui text-[7px] text-neutral-400">
+          {sharp ? 'replay' : 'loading…'}
+        </button>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function ActionSheetDemo() {
+  const [open, setOpen] = useState(true)
+  const [picked, setPicked] = useState<string | null>(null)
+  return (
+    <DemoBox>
+      <div className="relative h-24 w-52 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100">
+        <button type="button" onClick={() => setOpen(true)} className="absolute left-2 top-2 text-[8px] text-neutral-600">
+          Share…
+        </button>
+        {picked && !open && <div className="absolute left-2 top-8 text-[8px] text-emerald-700">{picked}</div>}
+        {open && (
+          <>
+            <button type="button" aria-label="Dismiss" onClick={() => setOpen(false)} className="absolute inset-0 bg-neutral-900/30" />
+            <div role="dialog" className="absolute inset-x-2 bottom-1 rounded-lg bg-white p-1 shadow-lg">
+              {[['Share', Share], ['Copy', Copy]].map(([label, Icon]) => (
+                <button
+                  key={label as string}
+                  type="button"
+                  onClick={() => { setPicked(label as string); setOpen(false) }}
+                  className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-[8px]"
+                >
+                  <Icon className="h-3 w-3 text-neutral-400" />
+                  {label as string}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => { setPicked('Delete'); setOpen(false) }}
+                className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-[8px] text-red-600"
+              >
+                <Trash2 className="h-3 w-3" />
+                Delete
+              </button>
+              <button type="button" onClick={() => setOpen(false)} className="mt-0.5 w-full rounded bg-neutral-50 py-1 text-[8px] text-neutral-500">
+                Cancel
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function SpeedDialDemo() {
+  const [open, setOpen] = useState(true)
+  const [picked, setPicked] = useState<string | null>(null)
+  const actions = [
+    { label: 'File', icon: FileText },
+    { label: 'Folder', icon: FolderPlus },
+    { label: 'Upload', icon: Upload },
+  ]
+  return (
+    <DemoBox>
+      <div className="relative h-24 w-40">
+        {picked && <div className="absolute left-0 top-0 font-mono-ui text-[8px] text-neutral-400">{picked}</div>}
+        <div className="absolute bottom-1 right-1 flex flex-col items-end gap-1">
+          {open && actions.map((action) => (
+            <button
+              key={action.label}
+              type="button"
+              onClick={() => { setPicked(action.label); setOpen(false) }}
+              className="flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-2 py-1 text-[8px] shadow"
+            >
+              {action.label}
+              <action.icon className="h-3 w-3" />
+            </button>
+          ))}
+          <button
+            type="button"
+            aria-expanded={open}
+            aria-label="New"
+            onClick={() => setOpen(!open)}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-white shadow"
+          >
+            <Plus className={`h-4 w-4 transition-transform ${open ? 'rotate-45' : ''}`} />
+          </button>
+        </div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function FloatingPillNavDemo() {
+  const [page, setPage] = useState('Home')
+  const items = [
+    { label: 'Home', icon: Home },
+    { label: 'Docs', icon: FileText },
+    { label: 'You', icon: UserRound },
+  ]
+  return (
+    <DemoBox>
+      <div className="relative h-24 w-52 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
+        <div className="p-2 text-[8px] text-neutral-400">{page}</div>
+        <nav className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-neutral-200 bg-white/95 px-1.5 py-1 shadow-lg">
+          {items.map((item) => (
+            <button
+              key={item.label}
+              type="button"
+              onClick={() => setPage(item.label)}
+              className={`flex items-center gap-1 rounded-full px-2 py-1 text-[8px] ${page === item.label ? 'bg-neutral-900 text-white' : 'text-neutral-500'}`}
+            >
+              <item.icon className="h-3 w-3" />
+              {item.label}
+            </button>
+          ))}
+        </nav>
       </div>
     </DemoBox>
   )

@@ -6,7 +6,7 @@ export type Lang = 'en' | 'zh'
 
 const en = {
   langSwitch: { en: 'EN', zh: '中文' },
-  nav: { elements: 'Elements', styles: 'Styles' },
+  nav: { elements: 'Elements', styles: 'Styles', releases: 'Releases' },
   sponsorLine: { label: 'Founding sponsor', link: 'your name here' },
 
   home: {
@@ -30,12 +30,13 @@ const en = {
         { n: 4, label: 'Content view', note: 'the document area' },
       ],
     },
-    dict: {
-      title: 'The dictionary',
-      filterAll: 'all',
-      filterWeb: 'web',
-      filterMac: 'macOS',
-      typeAll: 'all types',
+   dict: {
+     title: 'The dictionary',
+     filterAll: 'all',
+     filterWeb: 'web',
+     filterMac: 'macOS',
+     filterRecent: 'recent',
+     typeAll: 'all types',
       types: {
         'motion-layout': 'motion & layout',
         'core-components': 'core components',
@@ -178,7 +179,6 @@ const en = {
     copied: 'copied ✓',
     esc: 'esc',
     parts: 'the parts',
-    partsHint: 'Hover a number to locate what it names.',
   },
 
   entryCard: {
@@ -192,7 +192,7 @@ const en = {
 
 const zh: typeof en = {
   langSwitch: { en: 'EN', zh: '中文' },
-  nav: { elements: '元素', styles: '风格' },
+  nav: { elements: '元素', styles: '风格', releases: '更新日志' },
   sponsorLine: { label: '创始赞助', link: '你的名字' },
 
   home: {
@@ -215,12 +215,13 @@ const zh: typeof en = {
         { n: 4, label: '内容视图', note: '文档区域' },
       ],
     },
-    dict: {
-      title: '词典',
-      filterAll: '全部',
-      filterWeb: 'web',
-      filterMac: 'macOS',
-      typeAll: '全部类型',
+   dict: {
+     title: '词典',
+     filterAll: '全部',
+     filterWeb: 'web',
+     filterMac: 'macOS',
+     filterRecent: '最近更新',
+     typeAll: '全部类型',
       types: {
         'motion-layout': '动效与布局',
         'core-components': '基础组件',
@@ -362,7 +363,6 @@ const zh: typeof en = {
     copied: '已复制 ✓',
     esc: '关闭',
     parts: '部位',
-    partsHint: '悬停编号，定位它指代的部位。',
   },
 
   entryCard: {

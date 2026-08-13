@@ -101,7 +101,6 @@ export function EntryDetail({ entry, onClose }: { entry: Entry | null; onClose: 
             {e.anatomy && (
               <div>
                 <div className="eyebrow mb-1">{d.parts}</div>
-                <p className="mb-2 text-[11px] text-ink-3">{d.partsHint}</p>
                 <ol className="overflow-hidden rounded-md border border-hairline bg-white">
                   {e.anatomy.map((p) => (
                     <li

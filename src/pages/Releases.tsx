@@ -15,7 +15,7 @@ export default function Releases() {
         {RELEASES.map((release) => (
           <section key={release.version} aria-labelledby={`release-${release.version}`}>
             <h2 id={`release-${release.version}`} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="font-display text-[34px] leading-none tracking-tight">v{release.version}</span>
+              <span className="font-release-version text-[34px] leading-none tracking-tight">v{release.version}</span>
               <time dateTime={release.date} className="font-mono-ui text-[13px] text-ink-3">
                 {formatReleaseDate(release.date, lang)}
               </time>

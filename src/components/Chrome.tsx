@@ -51,6 +51,7 @@ export function Header() {
             {[
               { to: '/', label: ui.nav.elements, end: true },
               { to: '/styles', label: ui.nav.styles, end: false },
+              { to: '/releases', label: ui.nav.releases, end: false },
             ].map((t) => (
               <NavLink
                 key={t.to}
@@ -155,26 +156,25 @@ export function Footer() {
           </Link>
         </div>
 
-        {/* 关注与支持 */}
-        <div className="grid gap-10 py-10 md:grid-cols-[140px_1fr]">
-          <div className="eyebrow">{f.followTitle}</div>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {/* 微信 / 打赏二维码占位 */}
-            <div className="space-y-4">
-              <QrBox title={f.wechatLabel} note={f.wechatNote} src="/wechat-qr.png" />
-              <QrBox title={f.rewardLabel} note={f.rewardNote} src="/reward-qr.png" />
-            </div>
-            {/* 社交与订阅 */}
-            <div className="space-y-2 text-[12px] text-ink-2">
-              <a href="https://x.com/oneruofeng" target="_blank" rel="noreferrer" className="block underline decoration-dotted underline-offset-4 hover:text-ink">
-                X · @oneruofeng
-              </a>
-              <a href="https://github.com/wangruofeng" target="_blank" rel="noreferrer" className="block underline decoration-dotted underline-offset-4 hover:text-ink">
-                GitHub · @wangruofeng
-              </a>
-            </div>
-          </div>
-        </div>
+       {/* 关注与支持 */}
+       <div className="grid gap-10 py-10 md:grid-cols-[140px_1fr]">
+         <div className="eyebrow">{f.followTitle}</div>
+         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+           {/* 微信公众号 */}
+             <QrBox title={f.wechatLabel} note={f.wechatNote} src="/wechat-qr.png" />
+           {/* 打赏支持 */}
+             <QrBox title={f.rewardLabel} note={f.rewardNote} src="/reward-qr.png" />
+           {/* 社交与订阅 */}
+            <div className="flex flex-col justify-center gap-2 text-[12px] text-ink-2 sm:col-span-2 lg:col-span-1">
+             <a href="https://x.com/oneruofeng" target="_blank" rel="noreferrer" className="underline decoration-dotted underline-offset-4 hover:text-ink">
+               X · @oneruofeng
+             </a>
+             <a href="https://github.com/wangruofeng" target="_blank" rel="noreferrer" className="underline decoration-dotted underline-offset-4 hover:text-ink">
+               GitHub · @wangruofeng
+             </a>
+           </div>
+         </div>
+       </div>
       </div>
 
       {/* 版权条 */}

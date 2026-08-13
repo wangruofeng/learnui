@@ -58,6 +58,10 @@
   .font-display {
     font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   }
+  .font-release-version {
+    font-family: Charter, Georgia, 'Times New Roman', serif;
+    font-weight: 500;
+  }
   .font-mono-ui {
     font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   }

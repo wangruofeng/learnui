@@ -4,6 +4,7 @@ import { ENTRIES, getEntryCategory, type Entry, type EntryCategory } from '../da
 import { ENTRIES_ZH } from '../data/zh'
 import { EntryCard } from '../components/EntryCard'
 import { EntryDetail } from '../components/EntryDetail'
+import { BackToTop } from '../components/BackToTop'
 import { TrafficLights } from '../components/demos-macos'
 import { useI18n } from '../i18n/LanguageContext'
 import { splitBr } from '../i18n/ui'
@@ -182,9 +183,10 @@ type CategoryFilter = 'all' | EntryCategory
 export default function Home() {
   const { ui } = useI18n()
   const [q, setQ] = useState('')
-  const [filter, setFilter] = useState<Filter>('all')
-  const [category, setCategory] = useState<CategoryFilter>('all')
-  const [open, setOpen] = useState<Entry | null>(null)
+ const [filter, setFilter] = useState<Filter>('all')
+ const [category, setCategory] = useState<CategoryFilter>('all')
+  const [recent, setRecent] = useState(false)
+ const [open, setOpen] = useState<Entry | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const entries = useLocalizedEntries()
@@ -201,14 +203,15 @@ export default function Home() {
   }, [])
 
   const results = useMemo(() => {
-    return entries
-      .filter((e) => (filter === 'all' ? true : e.platform === filter))
-      .filter((e) => (category === 'all' ? true : getEntryCategory(e) === category))
-      .map((e) => ({ e, s: score(e, q) }))
-      .filter((x) => x.s > 0)
-      .sort((a, b) => (q ? b.s - a.s : 0))
-      .map((x) => x.e)
-  }, [entries, q, filter, category])
+   return entries
+     .filter((e) => (filter === 'all' ? true : e.platform === filter))
+     .filter((e) => (category === 'all' ? true : getEntryCategory(e) === category))
+      .filter((e) => (recent ? !!e.isNew : true))
+     .map((e) => ({ e, s: score(e, q) }))
+     .filter((x) => x.s > 0)
+     .sort((a, b) => (q ? b.s - a.s : 0))
+    .map((x) => x.e)
+ }, [entries, q, filter, category, recent])
 
   const groupedResults = useMemo(() => {
     const groups = new Map<EntryCategory, Entry[]>()
@@ -277,8 +280,8 @@ export default function Home() {
 
       {/* dictionary */}
       <section className="mt-16">
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-display text-2xl tracking-tight">{h.dict.title}</h2>
+       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-display text-2xl tracking-tight">{h.dict.title}</h2>
           <div className="flex items-center gap-1 rounded-full border border-hairline bg-white p-1">
             {(['all', 'web', 'macos'] as Filter[]).map((f) => (
               <button
@@ -289,8 +292,8 @@ export default function Home() {
                 }`}
               >
                 {f === 'all' ? `${h.dict.filterAll} ${counts.all}` : f === 'web' ? `${h.dict.filterWeb} ${counts.web}` : `${h.dict.filterMac} ${counts.macos}`}
-              </button>
-            ))}
+             </button>
+           ))}
           </div>
         </div>
 
@@ -300,6 +303,12 @@ export default function Home() {
             className={`shrink-0 rounded-full border px-3 py-1 text-[11px] transition-colors ${category === 'all' ? 'border-ink bg-ink text-white' : 'border-hairline bg-white text-ink-2 hover:border-hairline-dark'}`}
           >
             {h.dict.typeAll}
+          </button>
+          <button
+            onClick={() => setRecent((v) => !v)}
+            className={`flex shrink-0 items-center gap-1 rounded-full border px-3 py-1 text-[11px] transition-colors ${recent ? 'border-orange-600 bg-orange-600 text-white' : 'border-hairline bg-white text-ink-2 hover:border-hairline-dark'}`}
+          >
+            {h.dict.filterRecent}
           </button>
           {(Object.keys(h.dict.types) as EntryCategory[]).map((key) => (
             <button
@@ -338,6 +347,8 @@ export default function Home() {
       <TranslationTable />
 
       <EntryDetail entry={open} onClose={() => setOpen(null)} />
+
+      <BackToTop />
     </main>
   )
 }
