@@ -1924,7 +1924,7 @@ export function HoldToConfirmDemo() {
           onClick={() => confirmed && setConfirmed(false)}
           className={`relative h-9 w-32 overflow-hidden rounded-full border text-[10px] font-medium transition-colors ${confirmed ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-red-300 bg-white text-red-700'}`}
         >
-          <span className={`absolute inset-y-0 left-0 bg-red-100 transition-[width] ${holding ? 'w-full duration-[900ms]' : 'w-0 duration-150'}`} />
+          <span className={`absolute inset-y-0 left-0 bg-red-100 transition-[width] ${holding ? 'w-full duration-900' : 'w-0 duration-150'}`} />
           <span className="relative">{confirmed ? 'Deleted · click to reset' : 'Hold to delete'}</span>
         </button>
         <div className="mt-2 font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">hold · release to cancel</div>
