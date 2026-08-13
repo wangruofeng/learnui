@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Check, Copy } from 'lucide-react'
 import type { Entry } from '../data/entries'
 import { DEMO_REGISTRY } from './demo-registry'
 import { BadgeChipPillTagDemo } from './demos-web'
@@ -69,7 +70,7 @@ export function EntryDetail({ entry, onClose }: { entry: Entry | null; onClose: 
               : <Demo />)}
           </div>
 
-          <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_240px]">
+          <div className={`mt-4 grid gap-4 ${e.anatomy ? 'sm:grid-cols-[1fr_240px]' : ''}`}>
             <div>
               <div className="eyebrow mb-1">{d.realName}</div>
               <code className="block rounded-md border border-hairline bg-white px-3 py-2 font-mono-ui text-[12px] text-ink">
@@ -87,13 +88,15 @@ export function EntryDetail({ entry, onClose }: { entry: Entry | null; onClose: 
               </div>
 
               <div className="eyebrow mb-1 mt-4">{d.promptLabel}</div>
-              <div className="relative rounded-md border border-hairline bg-ink p-3 pr-14 text-[12px] leading-relaxed text-neutral-200">
+              <div className="relative rounded-md border border-hairline bg-ink p-3 pr-12 text-[12px] leading-relaxed text-neutral-200">
                 {e.prompt}
                 <button
                   onClick={copyPrompt}
-                  className="absolute right-2 top-2 rounded border border-white/20 px-2 py-0.5 font-mono-ui text-[10px] text-white/80 hover:bg-white/10"
+                  aria-label={copied ? d.copied : d.copy}
+                  title={copied ? d.copied : d.copy}
+                  className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded border border-white/20 text-white/80 hover:bg-white/10"
                 >
-                  {copied ? d.copied : d.copy}
+                  {copied ? <Check className="h-3 w-3" aria-hidden="true" /> : <Copy className="h-3 w-3" aria-hidden="true" />}
                 </button>
               </div>
             </div>
