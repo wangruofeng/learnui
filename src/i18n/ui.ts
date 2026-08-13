@@ -161,6 +161,13 @@ const en = {
     slogan: 'see it · verify it · name it',
     doublePress: 'double-press any word for a definition',
     placeholder: 'Wang Ruofeng',
+    releases: 'Release notes',
+  },
+
+  releases: {
+    eyebrow: 'index · releases',
+    title: 'Release notes',
+    intro: 'What shipped, in the order it shipped. Newest first.',
   },
 
   detail: {
@@ -338,6 +345,13 @@ const zh: typeof en = {
     slogan: '看到它 · 核实它 · 命名它',
     doublePress: '双击任意词查看释义',
     placeholder: '王若风',
+    releases: '更新日志',
+  },
+
+  releases: {
+    eyebrow: 'index · releases',
+    title: '更新日志',
+    intro: '按发布时间倒序记录每次上线改了什么。',
   },
 
   detail: {

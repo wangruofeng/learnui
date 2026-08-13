@@ -147,6 +147,12 @@ export function Footer() {
             </div>
             <p className="mt-2 font-mono-ui text-[11px] uppercase tracking-[0.14em] text-ink-3">{f.tagline}</p>
           </div>
+          <Link
+            to="/releases"
+            className="font-mono-ui text-[12px] text-ink-2 underline decoration-dotted underline-offset-4 hover:text-ink"
+          >
+            {f.releases}
+          </Link>
         </div>
 
         {/* 关注与支持 */}
@@ -182,8 +188,13 @@ export function Footer() {
               className="underline decoration-dotted underline-offset-4 text-ink-2"
             >
               GitHub
-            </a>{' '}
-            · {f.poweredBy}{' '}
+            </a>
+            {' · '}
+            <Link to="/releases" className="underline decoration-dotted underline-offset-4 text-ink-2">
+              {f.releases}
+            </Link>
+            {' · '}
+            {f.poweredBy}{' '}
             <a
               href="https://wangruofeng007.com/"
               target="_blank"

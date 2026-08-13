@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { FileText, Grid2X2, Home, Plus, UserRound } from 'lucide-react'
+import { Check, ChevronDown, ChevronRight, Eye, EyeOff, FileText, Folder, Grid2X2, Home, Minus, MoreHorizontal, MoreVertical, Plus, UserRound } from 'lucide-react'
 
 /* ------------------------------------------------------------------ */
 /* shared bits                                                         */
@@ -2317,4 +2317,726 @@ export function SplitPaneDemo() {
 export function ColorPickerDemo() {
   const [color, setColor] = useState('#10b981')
   return <DemoBox><div className="flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-3"><input id="picker-color" name="picker-color" aria-label="Accent color" type="color" value={color} onChange={(event) => setColor(event.target.value)} className="h-9 w-9 cursor-pointer rounded border-0 p-0" /><div><div className="text-[9px] font-medium text-neutral-700">Accent color</div><code className="font-mono-ui text-[8px] text-neutral-400">{color.toUpperCase()}</code></div><div className="ml-auto h-6 w-6 rounded-full" style={{ backgroundColor: color }} /></div></DemoBox>
+}
+
+/* ------------------------------------------------------------------ */
+/* named patterns · batch 1 + 2                                        */
+/* ------------------------------------------------------------------ */
+
+const STEP_LABELS = ['Cart', 'Ship', 'Pay', 'Review']
+
+export function StepsDemo() {
+  const [current, setCurrent] = useState(2)
+  return (
+    <DemoBox>
+      <ol className="flex w-56 items-start">
+        {STEP_LABELS.map((label, i) => {
+          const done = i < current
+          const active = i === current
+          return (
+            <li key={label} className="flex flex-1 items-start">
+              <button
+                type="button"
+                aria-current={active ? 'step' : undefined}
+                onClick={() => setCurrent(i)}
+                className="flex w-full flex-col items-center gap-1"
+              >
+                <span
+                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[8px] font-semibold ${
+                    done ? 'bg-emerald-600 text-white' : active ? 'bg-neutral-900 text-white' : 'bg-neutral-200 text-neutral-500'
+                  }`}
+                >
+                  {done ? <Check className="h-3 w-3" strokeWidth={3} /> : i + 1}
+                </span>
+                <span className={`text-[8px] ${active ? 'font-semibold text-neutral-900' : 'text-neutral-400'}`}>{label}</span>
+              </button>
+              {i < STEP_LABELS.length - 1 && (
+                <span className={`mt-2 h-px w-full min-w-2 ${i < current ? 'bg-emerald-600' : 'bg-neutral-200'}`} />
+              )}
+            </li>
+          )
+        })}
+      </ol>
+    </DemoBox>
+  )
+}
+
+const AVATARS = [
+  { initials: 'AR', tint: 'bg-amber-200 text-amber-900' },
+  { initials: 'JT', tint: 'bg-sky-200 text-sky-900' },
+  { initials: 'MK', tint: 'bg-rose-200 text-rose-900' },
+  { initials: 'DK', tint: 'bg-emerald-200 text-emerald-900' },
+]
+
+export function AvatarGroupDemo() {
+  const [overflow, setOverflow] = useState(4)
+  return (
+    <DemoBox>
+      <div className="text-center">
+        <div className="flex items-center justify-center">
+          {AVATARS.map((person, i) => (
+            <span
+              key={person.initials}
+              className={`relative flex h-8 w-8 items-center justify-center rounded-full ring-2 ring-white text-[9px] font-semibold ${person.tint} ${i > 0 ? '-ml-2' : ''}`}
+            >
+              {person.initials}
+            </span>
+          ))}
+          <button
+            type="button"
+            onClick={() => setOverflow((n) => (n >= 12 ? 4 : n + 2))}
+            className="relative -ml-2 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-[9px] font-semibold text-white ring-2 ring-white"
+          >
+            +{overflow}
+          </button>
+        </div>
+        <div className="mt-2 font-mono-ui text-[8px] text-neutral-400">facepile · click +N</div>
+      </div>
+    </DemoBox>
+  )
+}
+
+const MULTI_OPTIONS = ['Design', 'Research', 'Ops', 'Sales']
+
+export function MultiSelectDemo() {
+  const [open, setOpen] = useState(true)
+  const [selected, setSelected] = useState(['Design', 'Research'])
+  function toggle(option: string) {
+    setSelected((current) => (current.includes(option) ? current.filter((item) => item !== option) : [...current, option]))
+  }
+  return (
+    <DemoBox>
+      <div className="w-52">
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-haspopup="listbox"
+          onClick={() => setOpen(!open)}
+          className="flex w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-2 py-1 text-left"
+        >
+          <span className="flex flex-wrap gap-1">
+            {selected.length === 0 ? (
+              <span className="text-[9px] text-neutral-400">Select teams…</span>
+            ) : (
+              selected.map((item) => (
+                <span key={item} className="rounded bg-neutral-900 px-1.5 py-px text-[8px] text-white">
+                  {item} ×
+                </span>
+              ))
+            )}
+          </span>
+          <ChevronDown className="h-3 w-3 text-neutral-400" />
+        </button>
+        {open && (
+          <div role="listbox" aria-multiselectable="true" className="mt-1 rounded-md border border-neutral-200 bg-white py-1 shadow-lg">
+            {MULTI_OPTIONS.map((option) => {
+              const on = selected.includes(option)
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  role="option"
+                  aria-selected={on}
+                  onClick={() => toggle(option)}
+                  className="flex w-full items-center gap-2 px-2 py-1 text-left text-[9px] text-neutral-700"
+                >
+                  <span className={`flex h-3 w-3 items-center justify-center rounded-sm border ${on ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-300'}`}>
+                    {on && <Check className="h-2.5 w-2.5" strokeWidth={3} />}
+                  </span>
+                  {option}
+                </button>
+              )
+            })}
+          </div>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+const SPY_SECTIONS = ['Overview', 'Setup', 'Scrollspy']
+
+export function ScrollspyDemo() {
+  const [active, setActive] = useState(0)
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  function jump(index: number) {
+    setActive(index)
+    scrollerRef.current?.scrollTo({ top: index * 56, behavior: 'smooth' })
+  }
+  return (
+    <DemoBox>
+      <div className="flex h-24 w-56 overflow-hidden rounded-lg border border-neutral-200 bg-white">
+        <div
+          ref={scrollerRef}
+          onScroll={(event) => setActive(Math.min(2, Math.round(event.currentTarget.scrollTop / 56)))}
+          className="flex-1 overflow-y-auto p-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {SPY_SECTIONS.map((title) => (
+            <section key={title} className="mb-2 min-h-12">
+              <div className="text-[9px] font-semibold text-neutral-800">{title}</div>
+              <div className="mt-1 h-1.5 w-4/5 rounded bg-neutral-200" />
+              <div className="mt-1 h-1.5 w-3/5 rounded bg-neutral-100" />
+            </section>
+          ))}
+        </div>
+        <nav aria-label="On this page" className="w-20 border-l border-neutral-100 p-1.5">
+          <div className="mb-1 font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">On this page</div>
+          {SPY_SECTIONS.map((title, i) => (
+            <button
+              key={title}
+              type="button"
+              aria-current={active === i ? 'location' : undefined}
+              onClick={() => jump(i)}
+              className={`block w-full truncate py-0.5 text-left text-[8px] ${active === i ? 'font-semibold text-emerald-700' : 'text-neutral-400'}`}
+            >
+              {title}
+            </button>
+          ))}
+        </nav>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function AlertCalloutBannerDemo() {
+  const [alertOn, setAlertOn] = useState(true)
+  return (
+    <DemoBox>
+      <div className="w-56 space-y-1.5">
+        <div className="rounded bg-amber-100 px-2 py-0.5 text-center text-[8px] text-amber-900">Banner · card expires in 3 days</div>
+        {alertOn ? (
+          <div className="flex items-center justify-between rounded border border-amber-200 bg-amber-50 px-2 py-1 text-[8px] text-amber-900">
+            <span>Alert · password reset failed</span>
+            <button type="button" onClick={() => setAlertOn(false)} aria-label="Dismiss alert">×</button>
+          </div>
+        ) : (
+          <button type="button" onClick={() => setAlertOn(true)} className="w-full rounded border border-dashed border-neutral-300 px-2 py-1 text-[8px] text-neutral-400">
+            restore alert
+          </button>
+        )}
+        <div className="rounded border-l-2 border-sky-500 bg-sky-50 px-2 py-1 text-[8px] text-sky-900">Callout · authored next to this note</div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function SignInFormDemo() {
+  const [show, setShow] = useState(false)
+  const [password, setPassword] = useState('secret42')
+  return (
+    <DemoBox>
+      <div className="w-44 space-y-1.5">
+        <button type="button" className="w-full rounded-md border border-neutral-300 bg-white py-1 text-[8px] font-medium text-neutral-700">
+          Continue with Google
+        </button>
+        <div className="flex items-center gap-1.5 text-[7px] uppercase tracking-wider text-neutral-400">
+          <span className="h-px flex-1 bg-neutral-200" />
+          or
+          <span className="h-px flex-1 bg-neutral-200" />
+        </div>
+        <input
+          id="signin-email"
+          name="signin-email"
+          type="email"
+          autoComplete="username"
+          defaultValue="you@studio.dev"
+          className="w-full rounded border border-neutral-300 px-2 py-1 text-[8px] outline-none focus:border-emerald-600"
+        />
+        <div className="relative">
+          <input
+            id="signin-password"
+            name="signin-password"
+            type={show ? 'text' : 'password'}
+            autoComplete="current-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            className="w-full rounded border border-neutral-300 px-2 py-1 pr-6 text-[8px] outline-none focus:border-emerald-600"
+          />
+          <button
+            type="button"
+            aria-label={show ? 'Hide password' : 'Show password'}
+            onClick={() => setShow(!show)}
+            className="absolute right-1 top-1/2 -translate-y-1/2 text-neutral-400"
+          >
+            {show ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+          </button>
+        </div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function DatePickerDemo() {
+  const [open, setOpen] = useState(true)
+  const [start, setStart] = useState(10)
+  const [end, setEnd] = useState(16)
+  function pick(day: number) {
+    if (day < start || start === end) {
+      setStart(day)
+      setEnd(day)
+    } else {
+      setEnd(day)
+    }
+  }
+  return (
+    <DemoBox>
+      <div className="w-44">
+        <button
+          type="button"
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+          className="w-full rounded-md border border-neutral-300 bg-white px-2 py-1 text-left text-[9px] text-neutral-800"
+        >
+          Aug {start} – Aug {end}, 2026
+        </button>
+        {open && (
+          <div className="mt-1 rounded-md border border-neutral-200 bg-white px-1.5 py-1 shadow-lg">
+            <div className="mb-0.5 text-center font-mono-ui text-[7px] text-neutral-500">August 2026</div>
+            <div className="grid grid-cols-7 gap-px">
+              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                <span key={`${d}-${i}`} className="text-center font-mono-ui text-[6px] text-neutral-400">{d}</span>
+              ))}
+              {Array.from({ length: 6 }, (_, i) => <span key={`pad-${i}`} />)}
+              {Array.from({ length: 16 }, (_, i) => {
+                const day = i + 1
+                const inRange = day >= start && day <= end
+                const edge = day === start || day === end
+                return (
+                  <button
+                    key={day}
+                    type="button"
+                    onClick={() => pick(day)}
+                    className={`h-3.5 rounded text-[7px] ${edge ? 'bg-neutral-900 text-white' : inRange ? 'bg-emerald-100 text-emerald-800' : 'text-neutral-600 hover:bg-neutral-100'}`}
+                  >
+                    {day}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function HeaderNavbarDemo() {
+  const [page, setPage] = useState('Docs')
+  return (
+    <DemoBox>
+      <header className="w-56 rounded-lg border border-neutral-200 bg-white">
+        <div className="flex items-center gap-2 px-2 py-1.5">
+          <span className="text-[9px] font-semibold tracking-tight">Field</span>
+          <nav aria-label="Primary" className="flex flex-1 items-center gap-2">
+            {['Home', 'Docs', 'Pricing'].map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setPage(item)}
+                className={`text-[8px] ${page === item ? 'font-semibold text-neutral-900' : 'text-neutral-400'}`}
+              >
+                {item}
+              </button>
+            ))}
+          </nav>
+          <button type="button" className="rounded border border-neutral-200 px-1.5 py-0.5 text-[8px] text-neutral-600">
+            Sign in
+          </button>
+        </div>
+        <div className="border-t border-neutral-100 px-2 py-2 text-[8px] text-neutral-400">
+          header = whole strip · nav = Home / Docs / Pricing
+        </div>
+      </header>
+    </DemoBox>
+  )
+}
+
+export function CardDemo() {
+  const [saved, setSaved] = useState(false)
+  return (
+    <DemoBox>
+      <article className="w-40 overflow-hidden rounded-lg border border-neutral-200 bg-white text-left">
+        <div className="h-10 bg-gradient-to-br from-emerald-200 to-sky-200" />
+        <div className="p-2">
+          <div className="text-[10px] font-semibold text-neutral-900">Redesigning checkout</div>
+          <p className="mt-0.5 text-[8px] leading-snug text-neutral-500">A case study on fewer steps.</p>
+          <div className="mt-1.5 flex items-center justify-between">
+            <span className="font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">8 min</span>
+            <button
+              type="button"
+              onClick={() => setSaved(!saved)}
+              className={`text-[8px] ${saved ? 'text-emerald-700' : 'text-neutral-500'}`}
+            >
+              {saved ? 'Saved' : 'Save'}
+            </button>
+          </div>
+        </div>
+      </article>
+    </DemoBox>
+  )
+}
+
+export function ResizeHandleDemo() {
+  const boxRef = useRef<HTMLDivElement>(null)
+  const dragRef = useRef({ active: false, startY: 0, startH: 56 })
+  const [height, setHeight] = useState(56)
+
+  function apply(next: number) {
+    const clamped = Math.max(40, Math.min(96, next))
+    if (boxRef.current) boxRef.current.style.height = `${clamped}px`
+    return clamped
+  }
+
+  function finish() {
+    if (!dragRef.current.active) return
+    dragRef.current.active = false
+    const current = Number.parseFloat(boxRef.current?.style.height || `${height}`)
+    setHeight(current)
+  }
+
+  return (
+    <DemoBox>
+      <div
+        ref={boxRef}
+        className="relative w-48 rounded-md border border-neutral-300 bg-neutral-50 p-2"
+        style={{ height }}
+      >
+        <div className="text-[8px] leading-relaxed text-neutral-500">Field notes — drag the grip.</div>
+        <button
+          type="button"
+          aria-label="Resize notes"
+          onPointerDown={(event) => {
+            dragRef.current = { active: true, startY: event.clientY, startH: height }
+            event.currentTarget.setPointerCapture(event.pointerId)
+          }}
+          onPointerMove={(event) => {
+            if (!dragRef.current.active) return
+            apply(dragRef.current.startH + (event.clientY - dragRef.current.startY))
+          }}
+          onPointerUp={finish}
+          onPointerCancel={finish}
+          className="absolute bottom-0.5 right-0.5 flex h-4 w-4 cursor-nwse-resize items-end justify-end p-0.5"
+        >
+          <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden className="text-neutral-400">
+            <path d="M7 1 L1 7 M7 4 L4 7 M7 7 L7 7" stroke="currentColor" strokeWidth="1.2" fill="none" />
+          </svg>
+        </button>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function ThreeDotsDemo() {
+  const [open, setOpen] = useState<'meatballs' | 'kebab' | null>(null)
+  return (
+    <DemoBox>
+      <div className="grid w-56 grid-cols-2 gap-2">
+        <div className="relative rounded-md border border-neutral-200 bg-white p-2">
+          <div className="mb-1 font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">meatballs</div>
+          <button
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded={open === 'meatballs'}
+            aria-label="More"
+            onClick={() => setOpen(open === 'meatballs' ? null : 'meatballs')}
+            className="rounded p-0.5 hover:bg-neutral-100"
+          >
+            <MoreHorizontal className="h-4 w-4" />
+          </button>
+          {open === 'meatballs' && (
+            <div role="menu" className="absolute left-2 top-10 z-10 w-24 rounded-md border border-neutral-200 bg-white py-0.5 shadow-lg">
+              {['Rename…', 'Duplicate', 'Delete'].map((item) => (
+                <button key={item} type="button" role="menuitem" onClick={() => setOpen(null)} className="block w-full px-2 py-1 text-left text-[8px] text-neutral-700">
+                  {item}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="rounded-md border border-neutral-200 bg-white p-2">
+          <div className="mb-1 font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">kebab</div>
+          <button
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded={open === 'kebab'}
+            aria-label="More"
+            onClick={() => setOpen(open === 'kebab' ? null : 'kebab')}
+            className="rounded p-0.5 hover:bg-neutral-100"
+          >
+            <MoreVertical className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="rounded-md border border-neutral-200 bg-white p-2">
+          <div className="mb-1 font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">hamburger</div>
+          <div className="flex h-4 w-4 flex-col justify-center gap-[3px]">
+            <span className="h-px w-full bg-neutral-800" />
+            <span className="h-px w-full bg-neutral-800" />
+            <span className="h-px w-full bg-neutral-800" />
+          </div>
+        </div>
+        <div className="rounded-md border border-neutral-200 bg-white p-2">
+          <div className="mb-1 font-mono-ui text-[7px] uppercase tracking-wider text-neutral-400">command …</div>
+          <button type="button" className="text-[9px] font-medium text-neutral-800">Open…</button>
+        </div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function TreeViewDemo() {
+  const [open, setOpen] = useState({ docs: true, src: false })
+  const [focus, setFocus] = useState('docs')
+  return (
+    <DemoBox>
+      <div role="tree" aria-label="Project files" className="w-44 text-left">
+        <button
+          type="button"
+          role="treeitem"
+          aria-expanded={open.docs}
+          aria-selected={focus === 'docs'}
+          onClick={() => {
+            setFocus('docs')
+            setOpen((current) => ({ ...current, docs: !current.docs }))
+          }}
+          className={`flex w-full items-center gap-1 rounded px-1 py-0.5 text-[9px] ${focus === 'docs' ? 'bg-emerald-50 text-emerald-800' : 'text-neutral-700'}`}
+        >
+          <ChevronRight className={`h-3 w-3 transition-transform ${open.docs ? 'rotate-90' : ''}`} />
+          <Folder className="h-3 w-3" />
+          docs
+        </button>
+        {open.docs && (
+          <div role="group" className="ml-4">
+            {['intro.md', 'api.md'].map((file) => (
+              <button
+                key={file}
+                type="button"
+                role="treeitem"
+                aria-selected={focus === file}
+                onClick={() => setFocus(file)}
+                className={`flex w-full items-center gap-1 rounded px-1 py-0.5 text-[9px] ${focus === file ? 'bg-emerald-50 text-emerald-800' : 'text-neutral-600'}`}
+              >
+                <FileText className="h-3 w-3" />
+                {file}
+              </button>
+            ))}
+          </div>
+        )}
+        <button
+          type="button"
+          role="treeitem"
+          aria-expanded={open.src}
+          aria-selected={focus === 'src'}
+          onClick={() => {
+            setFocus('src')
+            setOpen((current) => ({ ...current, src: !current.src }))
+          }}
+          className={`mt-0.5 flex w-full items-center gap-1 rounded px-1 py-0.5 text-[9px] ${focus === 'src' ? 'bg-emerald-50 text-emerald-800' : 'text-neutral-700'}`}
+        >
+          <ChevronRight className={`h-3 w-3 transition-transform ${open.src ? 'rotate-90' : ''}`} />
+          <Folder className="h-3 w-3" />
+          src
+        </button>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function SpinbuttonDemo() {
+  const [value, setValue] = useState(2)
+  const min = 1
+  const max = 12
+  function step(delta: number) {
+    setValue((current) => Math.max(min, Math.min(max, current + delta)))
+  }
+  return (
+    <DemoBox>
+      <div className="text-center">
+        <div className="flex items-center rounded-md border border-neutral-300 bg-white">
+          <button type="button" aria-label="Decrease quantity" onClick={() => step(-1)} className="px-2 py-1.5 text-neutral-600">
+            <Minus className="h-3 w-3" />
+          </button>
+          <input
+            id="qty-spin"
+            name="qty-spin"
+            role="spinbutton"
+            aria-valuemin={min}
+            aria-valuemax={max}
+            aria-valuenow={value}
+            value={value}
+            readOnly
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowUp') { event.preventDefault(); step(1) }
+              if (event.key === 'ArrowDown') { event.preventDefault(); step(-1) }
+            }}
+            className="w-8 border-x border-neutral-200 bg-transparent text-center text-[12px] outline-none"
+          />
+          <button type="button" aria-label="Increase quantity" onClick={() => step(1)} className="px-2 py-1.5 text-neutral-600">
+            <Plus className="h-3 w-3" />
+          </button>
+        </div>
+        <div className="mt-1.5 font-mono-ui text-[8px] text-neutral-400">qty · not a wizard stepper</div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function ContextMenuWebDemo() {
+  const [menu, setMenu] = useState<{ x: number; y: number } | null>({ x: 88, y: 28 })
+  const [picked, setPicked] = useState<string | null>(null)
+  return (
+    <DemoBox>
+      <div className="relative h-24 w-52 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 p-2">
+        <button
+          type="button"
+          onContextMenu={(event) => {
+            event.preventDefault()
+            const box = event.currentTarget.parentElement?.getBoundingClientRect()
+            if (!box) return
+            setMenu({ x: event.clientX - box.left, y: event.clientY - box.top })
+            setPicked(null)
+          }}
+          onClick={() => setMenu(menu ? null : { x: 88, y: 28 })}
+          className="flex w-full items-center justify-between rounded border border-neutral-200 bg-white px-2 py-1.5 text-left text-[9px]"
+        >
+          <span>trail-map.md</span>
+          <span className="font-mono-ui text-[7px] text-neutral-400">right-click</span>
+        </button>
+        {picked && <div className="mt-2 text-[8px] text-emerald-700">{picked}</div>}
+        {menu && (
+          <div
+            role="menu"
+            className="absolute z-10 w-24 rounded-md border border-neutral-200 bg-white py-0.5 shadow-lg"
+            style={{ left: menu.x, top: menu.y }}
+          >
+            {['Rename…', 'Duplicate', 'Delete'].map((item) => (
+              <button
+                key={item}
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setPicked(item)
+                  setMenu(null)
+                }}
+                className={`block w-full px-2 py-1 text-left text-[8px] ${item === 'Delete' ? 'text-red-600' : 'text-neutral-700'}`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </DemoBox>
+  )
+}
+
+export function SplitButtonDemo() {
+  const [open, setOpen] = useState(true)
+  const [status, setStatus] = useState('Ready to save')
+  return (
+    <DemoBox>
+      <div className="text-center">
+        <div className="inline-flex overflow-hidden rounded-md border border-neutral-900 bg-neutral-900 text-white">
+          <button type="button" onClick={() => { setStatus('Saved draft'); setOpen(false) }} className="px-3 py-1.5 text-[9px] font-medium">
+            Save
+          </button>
+          <button
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded={open}
+            aria-label="More save options"
+            onClick={() => setOpen(!open)}
+            className="border-l border-white/20 px-1.5"
+          >
+            <ChevronDown className="h-3 w-3" />
+          </button>
+        </div>
+        {open && (
+          <div role="menu" className="mx-auto mt-1 w-28 rounded-md border border-neutral-200 bg-white py-0.5 text-left shadow-lg">
+            {['Save as…', 'Export PDF'].map((item) => (
+              <button
+                key={item}
+                type="button"
+                role="menuitem"
+                onClick={() => { setStatus(item); setOpen(false) }}
+                className="block w-full px-2 py-1 text-[8px] text-neutral-700"
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="mt-1.5 font-mono-ui text-[8px] text-neutral-400">{status}</div>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function SkipLinkDemo() {
+  const [focused, setFocused] = useState(false)
+  const [skipped, setSkipped] = useState(false)
+  return (
+    <DemoBox>
+      <div className="relative h-24 w-52 overflow-hidden rounded-lg border border-neutral-200 bg-white">
+        {focused && (
+          <button
+            type="button"
+            onClick={() => { setSkipped(true); setFocused(false) }}
+            className="absolute left-1 top-1 z-10 rounded bg-neutral-900 px-2 py-0.5 text-[8px] text-white"
+          >
+            Skip to content
+          </button>
+        )}
+        <div className="flex gap-2 border-b border-neutral-100 px-2 py-1 text-[8px] text-neutral-400">
+          <span>Home</span><span>Docs</span><span>Blog</span><span>Pricing</span>
+        </div>
+        <div className={`p-2 text-[8px] ${skipped ? 'bg-emerald-50 text-emerald-800' : 'text-neutral-500'}`}>
+          {skipped ? 'Landed in #main' : 'Tab in to reveal the skip link.'}
+        </div>
+        <button
+          type="button"
+          onClick={() => { setFocused((on) => !on); setSkipped(false) }}
+          className="absolute bottom-1 right-2 font-mono-ui text-[7px] text-neutral-400"
+        >
+          {focused ? 'hide' : 'Tab →'}
+        </button>
+      </div>
+    </DemoBox>
+  )
+}
+
+export function MenuButtonDemo() {
+  const [open, setOpen] = useState(true)
+  const [picked, setPicked] = useState<string | null>(null)
+  return (
+    <DemoBox>
+      <div className="relative -mt-6">
+        <button
+          type="button"
+          aria-haspopup="menu"
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+          className="inline-flex items-center gap-1 rounded-md border border-neutral-300 bg-white px-2 py-1 text-[9px] font-medium"
+        >
+          File
+          <ChevronDown className="h-3 w-3 text-neutral-400" />
+        </button>
+        {open && (
+          <div role="menu" className="absolute left-0 top-7 z-10 w-28 rounded-md border border-neutral-200 bg-white py-0.5 shadow-lg">
+            {['New', 'Open…', 'Save'].map((item) => (
+              <button
+                key={item}
+                type="button"
+                role="menuitem"
+                onClick={() => { setPicked(item); setOpen(false) }}
+                className="block w-full px-2 py-1 text-left text-[8px] text-neutral-700"
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        )}
+        {picked && !open && <div className="mt-8 font-mono-ui text-[8px] text-neutral-400">{picked}</div>}
+      </div>
+    </DemoBox>
+  )
 }

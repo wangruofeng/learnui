@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Styles from './pages/Styles'
 import Methodology from './pages/Methodology'
 import Sponsor from './pages/Sponsor'
+import Releases from './pages/Releases'
 import { Header, Footer } from './components/Chrome'
 import { DefinePopover } from './components/DefinePopover'
 
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/styles" element={<Styles />} />
           <Route path="/methodology" element={<Methodology />} />
           <Route path="/sponsor" element={<Sponsor />} />
+          <Route path="/releases" element={<Releases />} />
         </Routes>
       </div>
       <Footer />
