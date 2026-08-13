@@ -58,7 +58,7 @@ export function Header() {
                 to={t.to}
                 end={t.end}
                 className={({ isActive }) =>
-                  `rounded-full px-3.5 py-1 text-[12px] transition-colors ${
+                  `${t.to === '/releases' ? 'hidden sm:inline-flex' : ''} rounded-full px-3.5 py-1 text-[12px] transition-colors ${
                     isActive ? 'bg-ink text-white' : 'text-ink-2 hover:text-ink'
                   }`
                 }
@@ -184,6 +184,10 @@ export function Footer() {
               GitHub
             </a>
             {' · '}
+            <Link to="/releases" className="underline decoration-dotted underline-offset-4 text-ink-2 sm:hidden">
+              {f.releases}
+            </Link>
+            <span className="sm:hidden"> · </span>
             {f.poweredBy}{' '}
             <a
               href="https://wangruofeng007.com/"

@@ -65,16 +65,62 @@ export function MacAlertDemo() {
 }
 
 export function MacColorWellDemo() {
+  const [open, setOpen] = useState(false)
+  const [hue, setHue] = useState(12)
+  const color = `hsl(${hue} 82% 61%)`
+  const presets = [12, 42, 85, 145, 195, 230, 278, 325]
+
   return (
     <DemoBox>
-      <div className="flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-2.5 shadow-sm">
-        <button className="h-7 w-10 rounded-md border border-neutral-300 bg-gradient-to-br from-orange-400 to-rose-500 p-0.5 shadow-inner">
-          <span className="block h-full w-full rounded-[3px] border border-white/60" />
+      <div className="relative flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-2.5 shadow-sm">
+        <button
+          type="button"
+          aria-label="Choose fill color"
+          aria-expanded={open}
+          onClick={() => setOpen((value) => !value)}
+          className="h-7 w-10 rounded-md border border-neutral-300 p-0.5 shadow-inner focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+          style={{ backgroundColor: color }}
+        >
+          <span className="block h-full w-full rounded-[3px] border border-white/60" aria-hidden="true" />
         </button>
         <div>
           <div className="text-[10px] font-medium text-neutral-700">Fill</div>
-          <div className="text-[9px] text-blue-600">Show Colors…</div>
+          <button type="button" onClick={() => setOpen((value) => !value)} className="text-[9px] text-blue-600 hover:underline">
+            {open ? 'Hide Colors' : 'Show Colors…'}
+          </button>
         </div>
+        {open && (
+          <div role="dialog" aria-label="Color picker" className="absolute left-0 top-[calc(100%+6px)] z-10 w-44 rounded-lg border border-neutral-300 bg-white p-2 shadow-xl">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-6 w-6 rounded border border-black/10" style={{ backgroundColor: color }} aria-hidden="true" />
+              <span className="font-mono-ui text-[8px] text-neutral-500">H {Math.round(hue)}°</span>
+            </div>
+            <div className="grid grid-cols-8 gap-1">
+              {presets.map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  aria-label={`Set hue to ${value} degrees`}
+                  onClick={() => setHue(value)}
+                  className={`h-4 w-4 rounded-full border border-white shadow-sm ${hue === value ? 'ring-2 ring-neutral-700 ring-offset-1' : ''}`}
+                  style={{ backgroundColor: `hsl(${value} 82% 61%)` }}
+                />
+              ))}
+            </div>
+            <label className="mt-2 block font-mono-ui text-[7px] uppercase tracking-wide text-neutral-400">
+              Hue
+              <input
+                type="range"
+                min="0"
+                max="360"
+                value={hue}
+                onChange={(event) => setHue(Number(event.target.value))}
+                className="mt-1 block w-full accent-blue-500"
+                style={{ background: 'linear-gradient(to right, #ef4444, #eab308, #22c55e, #06b6d4, #3b82f6, #a855f7, #ec4899, #ef4444)' }}
+              />
+            </label>
+          </div>
+        )}
       </div>
     </DemoBox>
   )
