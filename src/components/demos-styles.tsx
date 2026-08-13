@@ -297,3 +297,103 @@ export function NeumorphismDemo() {
     </StyleShell>
   )
 }
+
+export function LiquidGlassDemo() {
+  return (
+    <StyleShell className="bg-[#dce5ea]">
+      <div className="relative h-full w-full overflow-hidden bg-[#f6f5f2] p-3 text-left">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-[8px] font-medium text-slate-400">Tuesday, July 14</div>
+            <div className="mt-0.5 text-[12px] font-semibold tracking-tight text-slate-800">Good morning</div>
+          </div>
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d9a877] text-[10px] text-white">M</div>
+        </div>
+        <div className="mt-2.5 flex gap-2">
+          <div className="h-12 flex-1 rounded-xl bg-[#254a64] p-2 text-[8px] text-white">
+            <div className="text-white/60">Now playing</div>
+            <div className="mt-1 font-medium">Night Drive</div>
+          </div>
+          <div className="h-12 flex-1 rounded-xl bg-[#e2c2a2] p-2 text-[8px] text-[#724c32]">
+            <div className="text-[#724c32]/60">Today</div>
+            <div className="mt-1 font-medium">3 new notes</div>
+          </div>
+        </div>
+        <div className="mt-2 h-5 rounded-lg bg-[#e4eaed]" />
+        <div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/70 bg-white/20 p-1 shadow-[inset_0_1px_1px_rgba(255,255,255,.85),inset_0_-1px_1px_rgba(41,78,99,.18),0_5px_14px_rgba(33,62,79,.22)] backdrop-blur-xl saturate-150">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/45 bg-white/35 text-[11px] text-slate-700 shadow-[inset_0_1px_1px_rgba(255,255,255,.95),0_1px_2px_rgba(46,76,94,.14)]">⌂</span>
+          <span className="flex h-7 w-7 items-center justify-center rounded-full text-[11px] text-slate-700">⌕</span>
+          <span className="flex h-7 w-7 items-center justify-center rounded-full text-[13px] text-slate-700">⋯</span>
+        </div>
+      </div>
+    </StyleShell>
+  )
+}
+
+export function FrutigerAeroDemo() {
+  return (
+    <StyleShell className="bg-[linear-gradient(180deg,#9bdeff_0%,#42acec_52%,#96db55_53%,#4caa45_100%)]">
+      <span className="absolute left-8 top-5 h-8 w-8 rounded-full border border-white/70 bg-white/15 shadow-[inset_2px_2px_4px_rgba(255,255,255,.9),2px_3px_6px_rgba(15,100,160,.2)]" />
+      <span className="absolute right-10 top-9 h-4 w-4 rounded-full border border-white/70 bg-white/15 shadow-[inset_1px_1px_2px_rgba(255,255,255,.9)]" />
+      <div className="relative rounded-2xl border border-white/60 bg-cyan-100/35 px-5 py-3 text-center shadow-[inset_0_1px_1px_rgba(255,255,255,.95),0_5px_12px_rgba(0,90,130,.25)]">
+        <div className="text-[11px] font-semibold text-[#075b86]">Fresh air today</div>
+        <div className="mt-1 rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,.8)_0%,rgba(255,255,255,.2)_45%,rgba(35,153,222,.85)_48%,#167fc5_100%)] px-3 py-1 text-[8px] font-bold text-white shadow-[inset_0_1px_1px_white]">Explore</div>
+      </div>
+    </StyleShell>
+  )
+}
+
+export function VernacularWebDemo() {
+  return (
+    <StyleShell className="bg-[#07153e]" >
+      <div className="absolute inset-0 opacity-70" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
+      <div className="relative w-56 border-2 border-fuchsia-300 bg-[#10205a] px-3 py-2 text-center font-serif text-[9px] text-yellow-100 shadow-[0_0_0_2px_#48d7ff]">
+        <div className="text-[13px] text-fuchsia-200">✦ Mara&apos;s Page ✦</div>
+        <div className="my-1 h-1 bg-[linear-gradient(90deg,#ff4141,#ffe34d,#50df72,#52d6ff,#cf5cff)]" />
+        <div>Welcome to my corner of the web!</div>
+        <div className="mt-1 inline-block border border-lime-300 bg-black px-1 font-mono-ui text-[8px] text-lime-300">000137</div>
+        <div className="mt-1 text-cyan-200 underline">sign my guestbook</div>
+      </div>
+    </StyleShell>
+  )
+}
+
+export function AquaDemo() {
+  return (
+    <StyleShell className="bg-[#477cbb]">
+      <div className="w-56 overflow-hidden rounded-md border border-white/80 bg-[repeating-linear-gradient(180deg,#f4f6fa_0_2px,#e8ebf0_2px_4px)] shadow-[0_7px_15px_rgba(0,25,75,.5)]">
+        <div className="flex items-center gap-1 border-b border-[#9aa8ba] px-2 py-1.5">
+          {['#f45b52', '#f6bd3a', '#55c856'].map((color) => <span key={color} className="h-2.5 w-2.5 rounded-full border border-black/20 shadow-[inset_0_1px_1px_rgba(255,255,255,.9)]" style={{ backgroundColor: color }} />)}
+          <span className="ml-2 text-[8px] font-semibold text-slate-600">Save As</span>
+        </div>
+        <div className="px-3 py-2 text-[9px] text-slate-600">Designs / aqua-mock.psd</div>
+        <div className="flex justify-end gap-1.5 px-3 pb-2.5">
+          <span className="rounded-full border border-slate-400 bg-white px-2 py-0.5 text-[8px] text-slate-600">Cancel</span>
+          <span className="rounded-full border border-[#0b4daf] bg-[radial-gradient(120%_90%_at_50%_-10%,rgba(255,255,255,.95)_0%,rgba(255,255,255,0)_48%),linear-gradient(180deg,#6ba8fa_0%,#1963d8_58%,#0d4dbc_100%)] px-2 py-0.5 text-[8px] font-semibold text-white shadow-[inset_0_1px_1px_white,0_1px_2px_rgba(0,30,90,.5)]">Save</span>
+        </div>
+      </div>
+    </StyleShell>
+  )
+}
+
+export function WindowsAeroDemo() {
+  return (
+    <StyleShell className="bg-[radial-gradient(circle_at_20%_20%,#bcdbff_0%,transparent_28%),linear-gradient(135deg,#193a7b,#43a5cc_52%,#276f50)]">
+      <div className="relative w-56 rounded-md border border-white/70 bg-[#b8d6ed]/35 p-1 shadow-[inset_0_0_0_1px_rgba(255,255,255,.35),0_8px_20px_rgba(0,15,65,.45)] backdrop-blur-md">
+        <div className="relative overflow-hidden rounded-t-sm px-2 py-1.5 text-[8px] font-semibold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,.9)]">
+          Downloads
+          <span className="absolute -right-3 -top-3 h-8 w-20 rotate-[-25deg] bg-white/25" />
+          <span className="relative float-right flex gap-1"><i className="h-2 w-2 rounded-sm bg-white/30" /><i className="h-2 w-2 rounded-sm bg-white/30" /><i className="h-2 w-2 rounded-sm bg-[#e84b54] shadow-[0_0_6px_#ff7b7b]" /></span>
+        </div>
+        <div className="rounded-sm bg-white/95 px-3 py-2">
+          <div className="text-[9px] text-slate-700">Copying 3 items…</div>
+          <div className="mt-2 h-2 overflow-hidden rounded-full border border-[#348740] bg-[#d8f2d8]">
+            <div className="relative h-full w-[58%] overflow-hidden bg-[linear-gradient(180deg,#a8f79f,#27c446_50%,#0e9b2c)] shadow-[inset_0_1px_1px_rgba(255,255,255,.8)]">
+              <span className="anim-aero-progress-shimmer absolute inset-y-0 w-1/3 -skew-x-[22deg] bg-gradient-to-r from-transparent via-white/75 to-transparent" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </StyleShell>
+  )
+}

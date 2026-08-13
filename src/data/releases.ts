@@ -14,6 +14,32 @@ export type Release = {
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.0',
+    date: '2026-08-13',
+    notes: {
+      zh: [
+        {
+          lead: '风格图鉴',
+          body: '新增 Liquid Glass、Frutiger Aero、民间网页风、Aqua 与 Windows Aero 五种视觉风格，补充完整中英文说明、识别特征、Agent prompt 和对应的风格 specimen。',
+        },
+        {
+          lead: '细节',
+          body: '重做 Liquid Glass specimen：仅将多层透镜玻璃用于悬浮控制层，内容保持不透明；Windows Aero 进度条加入 Windows 7 风格的循环高光扫动，并适配减少动态效果偏好。',
+        },
+      ],
+      en: [
+        {
+          lead: 'Styles atlas',
+          body: 'Added Liquid Glass, Frutiger Aero, Vernacular Web, Aqua, and Windows Aero, each with bilingual copy, recognition traits, an agent-ready prompt, and a matching style specimen.',
+        },
+        {
+          lead: 'Details',
+          body: 'Rebuilt the Liquid Glass specimen so only the floating control layer uses layered lens-like glass while content remains opaque. The Windows Aero progress bar now has a Windows 7-style looping shimmer that respects reduced-motion preferences.',
+        },
+      ],
+    },
+  },
+  {
     version: '1.3.0',
     date: '2026-08-13',
     notes: {

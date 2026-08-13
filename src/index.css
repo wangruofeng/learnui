@@ -197,6 +197,10 @@
   0%, 100% { transform: rotate(90deg); }
   50% { transform: rotate(0deg); }
 }
+@keyframes nt-aero-progress-shimmer {
+  0% { transform: translateX(-140%); }
+  100% { transform: translateX(360%); }
+}
 
 .anim-spin-slow { animation: nt-spin 0.9s linear infinite; }
 .anim-spin-slower { animation: nt-spin 2.4s linear infinite; }
@@ -216,6 +220,11 @@
 .anim-sheet { animation: nt-sheet-drop 3s ease-in-out infinite; }
 .anim-badge-pop { animation: nt-badge-pop 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
 .anim-triangle { animation: nt-triangle-wiggle 2.6s ease-in-out infinite; }
+.anim-aero-progress-shimmer { animation: nt-aero-progress-shimmer 1.9s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-aero-progress-shimmer { animation: none; }
+}
 
 /* ---------- vocab batch keyframes ---------- */
 @keyframes nt-reveal-up {

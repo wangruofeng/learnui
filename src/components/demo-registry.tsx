@@ -35,6 +35,7 @@ import {
   GlassmorphismDemo, NeubrutalismDemo, FlatDesignDemo, SkeuomorphismDemo, ClaymorphismDemo,
   MinimalismDemo, SwissDemo, WebBrutalismDemo, DarkModeDemo, AuroraDemo, Y2KDemo, PixelDemo,
   EditorialDemo, DuotoneDemo, GradientMeshDemo, GrainDemo, NeumorphismDemo,
+  LiquidGlassDemo, FrutigerAeroDemo, VernacularWebDemo, AquaDemo, WindowsAeroDemo,
 } from './demos-styles'
 
 export const DEMO_REGISTRY: Record<string, ComponentType> = {
@@ -207,4 +208,9 @@ export const DEMO_REGISTRY: Record<string, ComponentType> = {
   'gradient-mesh': GradientMeshDemo,
   grain: GrainDemo,
   neumorphism: NeumorphismDemo,
+  'liquid-glass': LiquidGlassDemo,
+  'frutiger-aero': FrutigerAeroDemo,
+  'vernacular-web': VernacularWebDemo,
+  aqua: AquaDemo,
+  'windows-aero': WindowsAeroDemo,
 }
