@@ -36,6 +36,7 @@ const en = {
      filterWeb: 'web',
      filterMac: 'macOS',
      filterRecent: 'recent',
+     filterFavorites: 'favorites',
      typeAll: 'all types',
       types: {
         'motion-layout': 'motion & layout',
@@ -48,6 +49,8 @@ const en = {
       },
       emptyTitle: 'Nothing by that name — yet.',
       emptyHint: 'Try sloppier words. “the circle that spins”, “red number on the icon”…',
+      favoritesEmptyTitle: 'No favorites saved yet.',
+      favoritesEmptyHint: 'Select the star on any entry to build your personal UI reference list.',
     },
     table: {
       title: 'Say it to your agent',
@@ -187,6 +190,8 @@ const en = {
     platformMac: 'macOS',
     copy: 'copy',
     copied: '✓',
+    addFavorite: 'Add to favorites',
+    removeFavorite: 'Remove from favorites',
   },
 }
 
@@ -221,6 +226,7 @@ const zh: typeof en = {
      filterWeb: 'web',
      filterMac: 'macOS',
      filterRecent: '最近更新',
+     filterFavorites: '收藏',
      typeAll: '全部类型',
       types: {
         'motion-layout': '动效与布局',
@@ -233,6 +239,8 @@ const zh: typeof en = {
       },
       emptyTitle: '还没有叫这个名字的。',
       emptyHint: '换个大白话试试。「会转的圆圈」「图标上的红数字」…',
+      favoritesEmptyTitle: '还没有收藏词条。',
+      favoritesEmptyHint: '点击任意词条上的星标，建立你的个人 UI 参考清单。',
     },
     table: {
       title: '跟你的代理说',
@@ -371,6 +379,8 @@ const zh: typeof en = {
     platformMac: 'macOS',
     copy: '复制',
     copied: '✓',
+    addFavorite: '添加到收藏',
+    removeFavorite: '取消收藏',
   },
 }
 

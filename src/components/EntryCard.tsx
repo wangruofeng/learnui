@@ -1,6 +1,7 @@
 import type { Entry } from '../data/entries'
 import { DEMO_REGISTRY } from './demo-registry'
 import { useI18n, useEntry } from '../i18n/LanguageContext'
+import { Star } from 'lucide-react'
 
 export function PlatformBadge({ platform, isNew }: { platform: 'web' | 'macos'; isNew?: boolean }) {
   const { ui } = useI18n()
@@ -23,8 +24,9 @@ export function PlatformBadge({ platform, isNew }: { platform: 'web' | 'macos'; 
   )
 }
 
-export function EntryCard({ entry, onOpen }: { entry: Entry; onOpen: (e: Entry) => void }) {
+export function EntryCard({ entry, onOpen, isFavorite = false, onToggleFavorite }: { entry: Entry; onOpen: (e: Entry) => void; isFavorite?: boolean; onToggleFavorite?: (id: string) => void }) {
   const e = useEntry(entry)
+  const { ui } = useI18n()
   const Demo = DEMO_REGISTRY[e.id]
   return (
     <div
@@ -41,7 +43,14 @@ export function EntryCard({ entry, onOpen }: { entry: Entry; onOpen: (e: Entry) 
           <h3 className="text-[14px] font-semibold leading-snug text-ink group-hover:underline group-hover:underline-offset-4">
             {e.name}
           </h3>
-          <PlatformBadge platform={e.platform} isNew={e.isNew} />
+          <div className="flex shrink-0 items-center gap-1.5">
+            {onToggleFavorite && (
+              <button type="button" onClick={() => onToggleFavorite(e.id)} aria-label={isFavorite ? ui.entryCard.removeFavorite : ui.entryCard.addFavorite} aria-pressed={isFavorite} title={isFavorite ? ui.entryCard.removeFavorite : ui.entryCard.addFavorite} className={`rounded-full p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink ${isFavorite ? 'text-orange-600 hover:bg-orange-50' : 'text-ink-3 hover:bg-neutral-100 hover:text-ink'}`}>
+                <Star className="h-3.5 w-3.5" fill={isFavorite ? 'currentColor' : 'none'} aria-hidden="true" />
+              </button>
+            )}
+            <PlatformBadge platform={e.platform} isNew={e.isNew} />
+          </div>
         </div>
         <code className="mt-1.5 block truncate font-mono-ui text-[11px] text-ink-3">{e.symbol}</code>
         <p className="mt-2 text-[13px] leading-relaxed text-ink-2">{e.blurb}</p>
