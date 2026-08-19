@@ -179,6 +179,7 @@ function TranslationTable() {
 
 type Filter = 'all' | 'web' | 'macos'
 type CategoryFilter = 'all' | EntryCategory
+const FAVORITES_STORAGE_KEY = 'learnui:favorites'
 
 export default function Home() {
   const { ui } = useI18n()
@@ -186,6 +187,13 @@ export default function Home() {
  const [filter, setFilter] = useState<Filter>('all')
  const [category, setCategory] = useState<CategoryFilter>('all')
   const [recent, setRecent] = useState(false)
+  const [favoritesOnly, setFavoritesOnly] = useState(false)
+  const [favoriteIds, setFavoriteIds] = useState<Set<string>>(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(FAVORITES_STORAGE_KEY) ?? '[]')
+      return new Set(Array.isArray(saved) ? saved.filter((id): id is string => typeof id === 'string') : [])
+    } catch { return new Set() }
+  })
  const [open, setOpen] = useState<Entry | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -202,16 +210,28 @@ export default function Home() {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  useEffect(() => {
+    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify([...favoriteIds]))
+  }, [favoriteIds])
+
+  const toggleFavorite = (id: string) => setFavoriteIds((current) => {
+    const next = new Set(current)
+    if (next.has(id)) next.delete(id)
+    else next.add(id)
+    return next
+  })
+
   const results = useMemo(() => {
    return entries
      .filter((e) => (filter === 'all' ? true : e.platform === filter))
      .filter((e) => (category === 'all' ? true : getEntryCategory(e) === category))
       .filter((e) => (recent ? !!e.isNew : true))
+      .filter((e) => (favoritesOnly ? favoriteIds.has(e.id) : true))
      .map((e) => ({ e, s: score(e, q) }))
      .filter((x) => x.s > 0)
      .sort((a, b) => (q ? b.s - a.s : 0))
     .map((x) => x.e)
- }, [entries, q, filter, category, recent])
+ }, [entries, q, filter, category, recent, favoritesOnly, favoriteIds])
 
   const groupedResults = useMemo(() => {
     const groups = new Map<EntryCategory, Entry[]>()
@@ -310,6 +330,9 @@ export default function Home() {
           >
             {h.dict.filterRecent}
           </button>
+          <button onClick={() => setFavoritesOnly((value) => !value)} aria-pressed={favoritesOnly} className={`flex shrink-0 items-center gap-1 rounded-full border px-3 py-1 text-[11px] transition-colors ${favoritesOnly ? 'border-orange-600 bg-orange-600 text-white' : 'border-hairline bg-white text-ink-2 hover:border-hairline-dark'}`}>
+            <span aria-hidden>★</span>{h.dict.filterFavorites} {favoriteIds.size}
+          </button>
           {(Object.keys(h.dict.types) as EntryCategory[]).map((key) => (
             <button
               key={key}
@@ -323,8 +346,8 @@ export default function Home() {
 
         {results.length === 0 ? (
           <div className="rounded-lg border border-dashed border-hairline-dark bg-white/60 px-6 py-16 text-center">
-            <p className="font-display text-xl italic text-ink-2">{h.dict.emptyTitle}</p>
-            <p className="mt-1 text-[13px] text-ink-3">{h.dict.emptyHint}</p>
+            <p className="font-display text-xl italic text-ink-2">{favoritesOnly ? h.dict.favoritesEmptyTitle : h.dict.emptyTitle}</p>
+            <p className="mt-1 text-[13px] text-ink-3">{favoritesOnly ? h.dict.favoritesEmptyHint : h.dict.emptyHint}</p>
           </div>
         ) : (
           <div className="space-y-10">
@@ -336,7 +359,7 @@ export default function Home() {
                   <span className="font-mono-ui text-[10px] text-ink-3">{groupEntries.length}</span>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {groupEntries.map((e) => <EntryCard key={e.id} entry={e} onOpen={setOpen} />)}
+                  {groupEntries.map((e) => <EntryCard key={e.id} entry={e} onOpen={setOpen} isFavorite={favoriteIds.has(e.id)} onToggleFavorite={toggleFavorite} />)}
                 </div>
               </section>
             ))}
