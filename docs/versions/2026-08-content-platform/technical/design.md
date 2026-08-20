@@ -1,6 +1,6 @@
 # LearnUI 内容平台技术设计
 
-> 对应 PRD：`docs/product/content-platform-prd.md`
+> 对应 PRD：`../product/prd.md`（即 `docs/versions/2026-08-content-platform/product/prd.md`）
 
 ## 1. 技术原则
 
