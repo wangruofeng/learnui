@@ -7,6 +7,7 @@ import { EntryDetail } from '../components/EntryDetail'
 import { BackToTop } from '../components/BackToTop'
 import { TrafficLights } from '../components/demos-macos'
 import { useI18n } from '../i18n/LanguageContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { splitBr } from '../i18n/ui'
 
 /* ------------------------------------------------------------------ */
@@ -183,6 +184,7 @@ const FAVORITES_STORAGE_KEY = 'learnui:favorites'
 
 export default function Home() {
   const { ui } = useI18n()
+  usePageMeta(ui.seo.home)
   const [q, setQ] = useState('')
  const [filter, setFilter] = useState<Filter>('all')
  const [category, setCategory] = useState<CategoryFilter>('all')

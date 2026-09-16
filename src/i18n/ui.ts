@@ -9,6 +9,35 @@ const en = {
   nav: { elements: 'Elements', styles: 'Styles', releases: 'Releases' },
   sponsorLine: { label: 'Founding sponsor', link: 'your name here' },
 
+  // 页面级 SEO 文案：usePageMeta 按 seo.<page> 取用，en / zh 必须同步
+  seo: {
+    home: {
+      title: 'Name That UI — What Is This UI Element Called?',
+      description:
+        'The visual dictionary of UI. See the element, learn its real name, and prompt your coding agent with precision.',
+    },
+    styles: {
+      title: 'UI Style Atlas — Glassmorphism to Brutalism | Name That UI',
+      description:
+        'The companion atlas of visual styles: glassmorphism, neubrutalism, skeuomorphism and more. See the aesthetic, learn its name, steal a paste-ready prompt.',
+    },
+    methodology: {
+      title: 'Methodology — How a UI Term Gets Named | Name That UI',
+      description:
+        'How every entry earns its name: identify the pixel first, then verify the term against platform docs, accessibility standards, and shipping APIs.',
+    },
+    sponsor: {
+      title: 'Sponsor the Visual Dictionary of UI | Name That UI',
+      description:
+        'Put your name in front of the designers and developers who look up what UI things are called. See the founding-sponsor slots.',
+    },
+    releases: {
+      title: 'Release Notes — New UI Terms & Styles | Name That UI',
+      description:
+        'What shipped in the visual dictionary of UI, newest first: new entries, style cards, and site improvements, version by version.',
+    },
+  },
+
   home: {
     hero: {
       eyebrow: 'the visual dictionary of ui',
@@ -198,6 +227,29 @@ const en = {
 const zh: typeof en = {
   langSwitch: { en: 'EN', zh: '中文' },
   nav: { elements: '元素', styles: '风格', releases: '更新日志' },
+
+  seo: {
+    home: {
+      title: 'Name That UI — 这个 UI 元素叫什么？',
+      description: 'UI 视觉词典：看到元素、学会它的正式名称，并复制可直接粘贴给编程 Agent 的提示词。',
+    },
+    styles: {
+      title: 'UI 风格图鉴 — 从玻璃拟态到粗野主义 | Name That UI',
+      description: 'UI 视觉风格图鉴：玻璃拟态、新粗野主义、拟物风……看懂美学、叫出名字，并复制现成的 Agent 提示词。',
+    },
+    methodology: {
+      title: '方法论 — UI 词条如何获得命名 | Name That UI',
+      description: '每个词条如何获得它的名字：先识别像素，再对照平台文档、无障碍标准与正式 API 逐一验证。',
+    },
+    sponsor: {
+      title: '赞助 UI 视觉词典 | Name That UI',
+      description: '让你的名字出现在前来查询 UI 名称的设计师与开发者面前，了解创始赞助位。',
+    },
+    releases: {
+      title: '更新日志 — 新词条与新风格 | Name That UI',
+      description: 'UI 视觉词典的发布记录，最新在前：新增词条、风格卡片与站点改进，逐版本整理。',
+    },
+  },
   sponsorLine: { label: '创始赞助', link: '你的名字' },
 
   home: {

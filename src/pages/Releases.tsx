@@ -1,8 +1,10 @@
 import { useI18n } from '../i18n/LanguageContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { RELEASES, formatReleaseDate } from '../data/releases'
 
 export default function Releases() {
   const { lang, ui } = useI18n()
+  usePageMeta(ui.seo.releases)
   const r = ui.releases
 
   return (

@@ -1,7 +1,9 @@
 import { useI18n } from '../i18n/LanguageContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function Methodology() {
   const { ui } = useI18n()
+  usePageMeta(ui.seo.methodology)
   const m = ui.methodology
   return (
     <main className="mx-auto max-w-3xl px-4 pb-8 pt-14">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { MacWindowDemo } from '../components/demos-macos'
 import { useI18n } from '../i18n/LanguageContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 function useCounter(target: number, duration = 1400) {
   const [n, setN] = useState(0)
@@ -33,6 +34,7 @@ function Tier({ price, unit, title, children, featured }: { price: string; unit:
 
 export default function Sponsor() {
   const { ui } = useI18n()
+  usePageMeta(ui.seo.sponsor)
   const s = ui.sponsor
   const pageviews = useCounter(1284930)
   const countries = useCounter(118)

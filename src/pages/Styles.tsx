@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { STYLES } from '../data/styles'
 import { DEMO_REGISTRY } from '../components/demo-registry'
 import { useI18n, useStyle } from '../i18n/LanguageContext'
+import { usePageMeta } from '../hooks/usePageMeta'
 
 function StyleCard({ id }: { id: (typeof STYLES)[number] }) {
   const { ui } = useI18n()
@@ -49,6 +50,7 @@ function StyleCard({ id }: { id: (typeof STYLES)[number] }) {
 
 export default function Styles() {
   const { ui } = useI18n()
+  usePageMeta(ui.seo.styles)
   return (
     <main className="mx-auto max-w-6xl px-4">
       <section className="pb-10 pt-14 text-center">
