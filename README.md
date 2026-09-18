@@ -62,11 +62,17 @@ src/
 ├── components/    # 页面壳层、词条卡片、详情弹窗和 UI demo
 ├── data/          # UI 元素、风格和中文本地化数据
 ├── i18n/          # 中英文界面文案与语言状态
-├── pages/         # Home、Styles、Methodology、Sponsor
+├── hooks/         # use-mobile、usePageMeta 等自定义 hooks
+├── lib/           # 工具函数
+├── pages/         # Home、Styles、Methodology、Sponsor、Releases
 └── App.tsx        # 路由和全局布局
 public/
+├── apple-touch-icon.png
 ├── favicon.png
+├── og-image.png
 ├── reward-qr.png
+├── robots.txt
+├── sitemap.xml
 └── wechat-qr.png
 ```
 

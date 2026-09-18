@@ -62,11 +62,17 @@ src/
 ├── components/    # App shell, entry cards, detail dialog, and UI demos
 ├── data/          # UI entries, styles, and Chinese localization data
 ├── i18n/          # English/Chinese UI copy and language state
-├── pages/         # Home, Styles, Methodology, and Sponsor pages
+├── hooks/         # Custom hooks (use-mobile, usePageMeta)
+├── lib/           # Utility functions
+├── pages/         # Home, Styles, Methodology, Sponsor, and Releases pages
 └── App.tsx        # Routes and global layout
 public/
+├── apple-touch-icon.png
 ├── favicon.png
+├── og-image.png
 ├── reward-qr.png
+├── robots.txt
+├── sitemap.xml
 └── wechat-qr.png
 ```
 
